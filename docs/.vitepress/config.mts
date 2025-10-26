@@ -49,15 +49,15 @@ function getModuleSidebar() {
 }
 
 export default defineConfig({
-  title: '《LangGraph 飞速上手 v0.1》',
-  description: '基于 LangChain Academy 的深度解读与工程实战指南',
+  title: 'StatsPai - AI & 统计计量',
+  description: '从 AI 智能体到统计计量，从 Python 到因果推断 - 数据科学全栈学习平台',
   lang: 'zh-CN',
   base: '/',
   ignoreDeadLinks: true,
-  
+
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
-    ['meta', { name: 'keywords', content: 'LangGraph,LangChain,AI,Agent,Multi-Agent,Python,教程,实战' }],
+    ['meta', { name: 'keywords', content: 'StatsPai,AI,Python,统计学,计量经济学,机器学习,因果推断,LangGraph,数据科学,智能体' }],
     ['meta', { name: 'author', content: 'Bryce Wang' }],
     // 引入经典编程字体
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
@@ -75,25 +75,13 @@ export default defineConfig({
     logo: '/logo.svg',
     
     nav: [
-      { text: '关于作者', link: 'https://www.zhihu.com/people/brycewang1898' },
-      { text: '首页', link: '/' },
-      { text: '开始学习', link: '/module-0/0.0-LangGraph-上手案例' },
-      {
-        text: '课程章节',
-        items: [
-          { text: '第 0 章 - 前言', link: '/module-0/0.0-LangGraph-上手案例' },
-          { text: '第 1 章 - 基础概念', link: '/module-1/1.1-simple-graph-最简图' },
-          { text: '第 2 章 - 核心机制', link: '/module-2/2.1-state-schema-详细解读' },
-          { text: '第 3 章 - 人机协作', link: '/module-3/breakpoints-详细解读' },
-          { text: '第 4 章 - 高级模式', link: '/module-4/4.1-parallelization-详细解读' },
-          { text: '第 5 章 - 记忆系统', link: '/module-5/5.1-memory_agent-详细解读' },
-          { text: '第 6 章 - 生产部署', link: '/module-6/6.1-creating-详细解读' }
-        ]
-      },
+      { text: '《智能体搭建 & LangGraph 飞速上手》', link: '/module-0/0.0-LangGraph-上手案例' },
+      { text: '《AI 时代学 Python》', link: '/python-book' },
+      { text: '《Python 与统计计量》', link: '/statistics-book' },
+      { text: '《机器学习 & 因果推断》', link: '/ml-causal-book' },
       { text: '🔑 API Key 配置', link: '/python-run' },
-      { text: '📈 网站访问数据', link: 'https://analytics.google.com/analytics/web/?authuser=4#/a371083495p508309497/reports/intelligenthome' },
-      { text: '反馈审核', link: 'https://cusdis.com/dashboard/project/9a1060ba-ab12-4429-a517-44a5b140e2d6' },
-      { text: '📅 更新 Roadmap', link: '/本书更新-Roadmap' }
+      { text: '网站使用说明', link: '/module-0/0.-1-网站使用说明.html' },
+      { text: '关于作者', link: 'https://www.zhihu.com/people/brycewang1898' }
     ],
     
     sidebar: getModuleSidebar(),
