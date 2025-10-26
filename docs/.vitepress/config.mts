@@ -49,7 +49,7 @@ function getModuleSidebar() {
 }
 
 export default defineConfig({
-  title: 'StatsPai - AI & 统计计量',
+  title: 'LearnPy：AI & 统计计量',
   description: '从 AI 智能体到统计计量，从 Python 到因果推断 - 数据科学全栈学习平台',
   lang: 'zh-CN',
   base: '/',

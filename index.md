@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: "StatsPai"
+  name: "LearnPy"
   text: "AI & 统计分析全栈学习平台"
   tagline: 从 AI 智能体到统计计量，从 Python 到因果推断 - 打造数据科学全栈能力
   image:
