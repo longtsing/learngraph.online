@@ -81,7 +81,7 @@ export default defineConfig({
       { text: '《机器学习 & 因果推断》', link: '/ml-causal-book' },
       { text: '🔑 API Key 配置', link: '/python-run' },
       { text: '网站使用说明', link: '/module-0/0.-1-网站使用说明.html' },
-      { text: '关于作者', link: 'https://www.zhihu.com/people/brycewang1898' }
+      { text: '关于作者', link: 'https://statspai.com' }
     ],
     
     sidebar: getModuleSidebar(),
