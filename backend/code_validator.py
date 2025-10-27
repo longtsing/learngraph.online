@@ -12,9 +12,14 @@ class CodeValidator:
 
     # 危险的模块和函数（黑名单）
     DANGEROUS_IMPORTS = {
-        'os', 'subprocess', 'shutil', 'socket', 'urllib',
+        'subprocess', 'shutil', 'socket', 'urllib',
         'requests', 'http', 'ftplib', 'smtplib', 'pickle', 'shelve',
         '__import__', 'importlib', 'ctypes', 'multiprocessing'
+    }
+
+    # os 模块的安全函数（白名单）
+    SAFE_OS_FUNCTIONS = {
+        'environ.get', 'getenv', 'environ'
     }
 
     # 允许的 sys 模块只读属性（安全的信息获取）
@@ -43,9 +48,9 @@ class CodeValidator:
 
     # 危险的字符串模式（正则表达式）
     DANGEROUS_PATTERNS = [
-        r'import\s+(os|subprocess|socket|pickle)',  # 危险导入（移除 sys）
-        r'from\s+(os|subprocess|socket)\s+import',  # from ... import（移除 sys）
-        # 移除了对所有 __x__ 的限制，改为在 AST 检查中精确控制
+        r'import\s+(subprocess|socket|pickle)',  # 危险导入（移除 os 和 sys）
+        r'from\s+(subprocess|socket)\s+import',  # from ... import（移除 os 和 sys）
+        r'os\.(system|popen|spawn|exec|fork|kill|remove|unlink|rmdir|mkdir)',  # 危险的 os 函数
         r'\.{2,}/',  # 路径遍历 ../
         r'/etc/',  # 系统目录
         r'/home/',  # 用户目录
@@ -60,7 +65,7 @@ class CodeValidator:
         # Python 标准库
         'math', 'random', 'datetime', 'time', 'json', 'collections',
         'itertools', 'functools', 'operator', 'string', 're',
-        'statistics', 'decimal', 'fractions', 'sys',
+        'statistics', 'decimal', 'fractions', 'sys', 'os',
         # LangChain 相关
         'langchain', 'langchain_openai', 'langchain_anthropic', 'langchain_core',
         'langchain_community', 'langchain_experimental',
@@ -138,6 +143,20 @@ class CodeValidator:
                     if node.attr not in cls.SAFE_SYS_ATTRIBUTES:
                         return False, f"❌ 不允许访问 sys.{node.attr}（仅支持只读信息属性，如 sys.version）"
 
+                # 检查 os 模块的属性访问 - 只允许 environ
+                if isinstance(node.value, ast.Name) and node.value.id == 'os':
+                    if node.attr not in ['environ', 'getenv']:
+                        return False, f"❌ 不允许访问 os.{node.attr}（仅支持 os.environ 和 os.getenv）"
+
+                # 检查 os.environ.get 的链式访问
+                if isinstance(node.value, ast.Attribute):
+                    if (isinstance(node.value.value, ast.Name) and
+                        node.value.value.id == 'os' and
+                        node.value.attr == 'environ' and
+                        node.attr == 'get'):
+                        # os.environ.get() 是安全的
+                        pass
+
             # 检查循环深度（防止死循环）
             if isinstance(node, ast.While):
                 # 简单检测 while True
@@ -210,10 +229,13 @@ if __name__ == "__main__":
     test_cases = [
         ("print('Hello')", True),
         ("import math\nprint(math.pi)", True),
-        ("import sys\nprint(sys.version)", True),  # 新增：允许 sys.version
-        ("import sys\nprint(sys.platform)", True),  # 新增：允许 sys.platform
+        ("import sys\nprint(sys.version)", True),  # 允许 sys.version
+        ("import sys\nprint(sys.platform)", True),  # 允许 sys.platform
         ("import sys\nsys.exit()", False),  # 不允许 sys.exit()
-        ("import os\nos.system('ls')", False),
+        ("import os\napi_key = os.environ.get('OPENAI_API_KEY')", True),  # 允许 os.environ.get()
+        ("import os\napi_key = os.getenv('OPENAI_API_KEY')", True),  # 允许 os.getenv()
+        ("import os\nos.system('ls')", False),  # 不允许 os.system()
+        ("import os\nos.remove('file.txt')", False),  # 不允许 os.remove()
         ("eval('1+1')", False),
         ("while True: pass", False),
         ("for i in range(10000000): pass", False),
