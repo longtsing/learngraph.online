@@ -80,7 +80,6 @@ export default defineConfig({
       { text: '《LangChain 飞速上手》', link: '/langchain-book' },
       { text: '《AI 与大模型飞速上手》', link: '/ai-llm-book' },
       { text: '🔑 API Key 配置', link: '/python-run' },
-      { text: '📖 网站使用说明', link: '/' },
       { text: '关于作者', link: 'https://statspai.com' }
     ],
     
