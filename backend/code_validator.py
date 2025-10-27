@@ -67,7 +67,7 @@ class CodeValidator:
         'itertools', 'functools', 'operator', 'string', 're',
         'statistics', 'decimal', 'fractions', 'sys', 'os',
         # LangChain 相关
-        'langchain', 'langchain_openai', 'langchain_anthropic', 'langchain_core',
+        'langchain', 'langchain_openai', 'langchain_anthropic', 'langchain_deepseek', 'langchain_core',
         'langchain_community', 'langchain_experimental',
         # LangGraph 相关
         'langgraph', 'langgraph_checkpoint', 'langgraph_sdk',

@@ -272,7 +272,7 @@ import os
 from langchain_anthropic import ChatAnthropic
 
 llm = ChatAnthropic(
-    model="claude-3-5-sonnet-20241022",
+    model="claude-haiku-4-5",
     api_key=os.environ.get("ANTHROPIC_API_KEY")
 )
 response = llm.invoke("用一句话介绍 LangChain")
@@ -283,12 +283,11 @@ print(response.content)
 
 ```python
 import os
-from langchain_openai import ChatOpenAI
+from langchain_deepseek import ChatDeepSeek
 
-llm = ChatOpenAI(
+llm = ChatDeepSeek(
     model="deepseek-chat",
-    api_key=os.environ.get("DEEPSEEK_API_KEY"),
-    base_url="https://api.deepseek.com"
+    api_key=os.environ.get("DEEPSEEK_API_KEY")
 )
 response = llm.invoke("用一句话介绍 LangChain")
 print(response.content)

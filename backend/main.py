@@ -115,7 +115,9 @@ async def health_check():
 @app.post("/execute", response_model=CodeExecutionResponse)
 async def execute_code(
     request: CodeExecutionRequest,
-    x_openai_api_key: Optional[str] = Header(None)
+    x_openai_api_key: Optional[str] = Header(None),
+    x_anthropic_api_key: Optional[str] = Header(None),
+    x_deepseek_api_key: Optional[str] = Header(None)
 ):
     """
     执行 Python 代码
@@ -213,10 +215,16 @@ sys.modules['IPython.display'] = IPythonDisplay
                 'PYTHONUNBUFFERED': '1',
             })
 
-            # 如果提供了 OpenAI API Key，添加到环境变量
+            # 如果提供了 API Keys，添加到环境变量
             if x_openai_api_key:
                 env['OPENAI_API_KEY'] = x_openai_api_key
                 logger.info("OpenAI API Key provided")
+            if x_anthropic_api_key:
+                env['ANTHROPIC_API_KEY'] = x_anthropic_api_key
+                logger.info("Anthropic API Key provided")
+            if x_deepseek_api_key:
+                env['DEEPSEEK_API_KEY'] = x_deepseek_api_key
+                logger.info("DeepSeek API Key provided")
 
             # 执行 Python 代码
             import sys

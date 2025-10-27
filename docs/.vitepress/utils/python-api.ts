@@ -27,16 +27,24 @@ export interface ExecuteCodeResponse {
  */
 export async function executeCode(code: string, timeout: number = 10): Promise<ExecuteCodeResponse> {
   try {
-    // 从 localStorage 读取 OpenAI API Key（如果有的话）
-    const openaiKey = localStorage.getItem('openai_api_key')
+    // 从 localStorage 读取所有 API Keys
+    const openaiKey = localStorage.getItem('langgraph_api_openai')
+    const anthropicKey = localStorage.getItem('langgraph_api_anthropic')
+    const deepseekKey = localStorage.getItem('langgraph_api_deepseek')
 
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     }
 
-    // 如果有 API Key，添加到请求头
+    // 如果有 API Keys，添加到请求头
     if (openaiKey) {
       headers['X-OpenAI-API-Key'] = openaiKey
+    }
+    if (anthropicKey) {
+      headers['X-Anthropic-API-Key'] = anthropicKey
+    }
+    if (deepseekKey) {
+      headers['X-DeepSeek-API-Key'] = deepseekKey
     }
 
     const response = await fetch(`${API_BASE_URL}/execute`, {
