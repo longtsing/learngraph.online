@@ -12,12 +12,13 @@ const STORAGE_PREFIX = 'langgraph_api_'
 export interface ApiKeyConfig {
   openai?: string
   anthropic?: string
+  deepseek?: string
 }
 
 /**
  * 保存 API Key 到 localStorage
  */
-export function saveApiKey(provider: 'openai' | 'anthropic', key: string): void {
+export function saveApiKey(provider: 'openai' | 'anthropic' | 'deepseek', key: string): void {
   try {
     localStorage.setItem(`${STORAGE_PREFIX}${provider}`, key)
     console.log(`[API Key] ${provider} key saved locally (browser only)`)
@@ -30,7 +31,7 @@ export function saveApiKey(provider: 'openai' | 'anthropic', key: string): void 
 /**
  * 获取 API Key
  */
-export function getApiKey(provider: 'openai' | 'anthropic'): string | null {
+export function getApiKey(provider: 'openai' | 'anthropic' | 'deepseek'): string | null {
   try {
     return localStorage.getItem(`${STORAGE_PREFIX}${provider}`)
   } catch (error) {
@@ -42,7 +43,7 @@ export function getApiKey(provider: 'openai' | 'anthropic'): string | null {
 /**
  * 删除 API Key
  */
-export function deleteApiKey(provider: 'openai' | 'anthropic'): void {
+export function deleteApiKey(provider: 'openai' | 'anthropic' | 'deepseek'): void {
   try {
     localStorage.removeItem(`${STORAGE_PREFIX}${provider}`)
     console.log(`[API Key] ${provider} key deleted`)
@@ -58,6 +59,7 @@ export function getAllApiKeys(): ApiKeyConfig {
   return {
     openai: getApiKey('openai') || undefined,
     anthropic: getApiKey('anthropic') || undefined,
+    deepseek: getApiKey('deepseek') || undefined,
   }
 }
 
@@ -67,13 +69,14 @@ export function getAllApiKeys(): ApiKeyConfig {
 export function clearAllApiKeys(): void {
   deleteApiKey('openai')
   deleteApiKey('anthropic')
+  deleteApiKey('deepseek')
   console.log('[API Key] All keys cleared')
 }
 
 /**
  * 检查是否有 API Key
  */
-export function hasApiKey(provider: 'openai' | 'anthropic'): boolean {
+export function hasApiKey(provider: 'openai' | 'anthropic' | 'deepseek'): boolean {
   const key = getApiKey(provider)
   return key !== null && key.trim().length > 0
 }
@@ -81,7 +84,7 @@ export function hasApiKey(provider: 'openai' | 'anthropic'): boolean {
 /**
  * 验证 API Key 格式
  */
-export function validateApiKey(provider: 'openai' | 'anthropic', key: string): boolean {
+export function validateApiKey(provider: 'openai' | 'anthropic' | 'deepseek', key: string): boolean {
   if (!key || key.trim().length === 0) {
     return false
   }
@@ -93,6 +96,9 @@ export function validateApiKey(provider: 'openai' | 'anthropic', key: string): b
   } else if (provider === 'anthropic') {
     // Anthropic key 通常以 sk-ant- 开头
     return key.startsWith('sk-ant-') && key.length > 20
+  } else if (provider === 'deepseek') {
+    // DeepSeek key 通常以 sk- 开头
+    return key.startsWith('sk-') && key.length > 20
   }
 
   return false
@@ -104,6 +110,7 @@ export function validateApiKey(provider: 'openai' | 'anthropic', key: string): b
 export function detectRequiredApiKeys(code: string): {
   needsOpenAI: boolean
   needsAnthropic: boolean
+  needsDeepSeek: boolean
 } {
   const upperCode = code.toUpperCase()
 
@@ -117,7 +124,11 @@ export function detectRequiredApiKeys(code: string): {
       upperCode.includes('ANTHROPIC_API_KEY') ||
       upperCode.includes('ANTHROPIC') ||
       upperCode.includes('CLAUDE') ||
-      upperCode.includes('CHATANTHROPIC')
+      upperCode.includes('CHATANTHROPIC'),
+    needsDeepSeek:
+      upperCode.includes('DEEPSEEK_API_KEY') ||
+      upperCode.includes('DEEPSEEK') ||
+      upperCode.includes('DEEPSEEK-CHAT')
   }
 }
 
@@ -159,6 +170,22 @@ export function injectApiKeys(code: string, keys: ApiKeyConfig): string {
     modifiedCode = modifiedCode.replace(
       /getpass\s*\(\s*["'].*?ANTHROPIC.*?["']\s*\)/g,
       `"${keys.anthropic}"`
+    )
+  }
+
+  // 注入 DeepSeek API Key
+  if (keys.deepseek) {
+    modifiedCode = modifiedCode.replace(
+      /os\.environ\.get\s*\(\s*["']DEEPSEEK_API_KEY["']\s*\)/g,
+      `"${keys.deepseek}"`
+    )
+    modifiedCode = modifiedCode.replace(
+      /os\.getenv\s*\(\s*["']DEEPSEEK_API_KEY["']\s*\)/g,
+      `"${keys.deepseek}"`
+    )
+    modifiedCode = modifiedCode.replace(
+      /getpass\s*\(\s*["'].*?DEEPSEEK.*?["']\s*\)/g,
+      `"${keys.deepseek}"`
     )
   }
 

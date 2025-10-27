@@ -60,6 +60,26 @@
               </div>
               <small class="hint">用于 Claude 等 Anthropic 模型</small>
             </div>
+
+            <!-- DeepSeek API Key -->
+            <div class="form-group">
+              <label>
+                <span class="label-text">DeepSeek API Key</span>
+                <span v-if="hasDeepSeek" class="status-badge">已配置 ✓</span>
+              </label>
+              <div class="input-group">
+                <input
+                  v-model="tempDeepSeek"
+                  :type="showDeepSeek ? 'text' : 'password'"
+                  placeholder="sk-..."
+                  class="api-key-input"
+                />
+                <button @click="showDeepSeek = !showDeepSeek" class="toggle-button">
+                  {{ showDeepSeek ? '🙈' : '👁️' }}
+                </button>
+              </div>
+              <small class="hint">用于 deepseek-chat 等 DeepSeek 模型</small>
+            </div>
           </div>
 
           <div class="modal-actions">
@@ -90,10 +110,13 @@ import {
 const showModal = ref(false)
 const tempOpenAI = ref('')
 const tempAnthropic = ref('')
+const tempDeepSeek = ref('')
 const showOpenAI = ref(false)
 const showAnthropic = ref(false)
+const showDeepSeek = ref(false)
 const hasOpenAI = ref(false)
 const hasAnthropic = ref(false)
+const hasDeepSeek = ref(false)
 const message = ref('')
 const messageType = ref<'success' | 'error'>('success')
 
@@ -105,8 +128,10 @@ onMounted(() => {
 function loadKeys() {
   tempOpenAI.value = getApiKey('openai') || ''
   tempAnthropic.value = getApiKey('anthropic') || ''
+  tempDeepSeek.value = getApiKey('deepseek') || ''
   hasOpenAI.value = hasApiKey('openai')
   hasAnthropic.value = hasApiKey('anthropic')
+  hasDeepSeek.value = hasApiKey('deepseek')
 }
 
 function saveKeys() {
@@ -133,6 +158,16 @@ function saveKeys() {
       saveApiKey('anthropic', tempAnthropic.value.trim())
     }
 
+    // 保存 DeepSeek Key
+    if (tempDeepSeek.value.trim()) {
+      if (!validateApiKey('deepseek', tempDeepSeek.value)) {
+        message.value = '❌ DeepSeek API Key 格式不正确（应以 sk- 开头）'
+        messageType.value = 'error'
+        return
+      }
+      saveApiKey('deepseek', tempDeepSeek.value.trim())
+    }
+
     message.value = '✅ API Keys 已保存到浏览器本地'
     messageType.value = 'success'
     loadKeys()
@@ -154,8 +189,10 @@ function clearKeys() {
     clearAllApiKeys()
     tempOpenAI.value = ''
     tempAnthropic.value = ''
+    tempDeepSeek.value = ''
     hasOpenAI.value = false
     hasAnthropic.value = false
+    hasDeepSeek.value = false
     message.value = '✅ 已清空所有 API Keys'
     messageType.value = 'success'
   }
