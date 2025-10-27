@@ -31,13 +31,13 @@ function getModuleSidebar() {
     
     // 自定义部分章节的分组标题
     let moduleText = `第 ${moduleNumber} 章`
-    if (moduleNumber === '0') moduleText = '第 0 章 前言'
-    if (moduleNumber === '1') moduleText = '第 1 章 基础概念'
-    if (moduleNumber === '2') moduleText = '第 2 章 核心机制'
-    if (moduleNumber === '3') moduleText = '第 3 章 人机协作'
-    if (moduleNumber === '4') moduleText = '第 4 章 高级模式'
-    if (moduleNumber === '5') moduleText = '第 5 章 记忆系统'
-    if (moduleNumber === '6') moduleText = '第 6 章 生产部署'
+    if (moduleNumber === '0') moduleText = '第 0 章 Python 回顾'
+    if (moduleNumber === '1') moduleText = '第 1 章 LangGraph & LangChain 基础'
+    if (moduleNumber === '2') moduleText = '第 2 章 LangGraph 核心机制'
+    if (moduleNumber === '3') moduleText = '第 3 章 Langgraph 人机协作'
+    if (moduleNumber === '4') moduleText = '第 4 章 LangGraph 高级模式'
+    if (moduleNumber === '5') moduleText = '第 5 章 LangGraph 记忆系统'
+    if (moduleNumber === '6') moduleText = '第 6 章 LangGraph 生产部署'
     sidebar.push({
       text: moduleText,
       collapsed: false,
@@ -49,15 +49,15 @@ function getModuleSidebar() {
 }
 
 export default defineConfig({
-  title: 'LearnGraph：智能体搭建',
-  description: '从 Pythonn 基础，到AI 和智能体系统搭建I - Agentic AI 全栈学习平台',
+  title: 'AI 智能体学习平台',
+  description: '从 Python 基础到 LangGraph、LangChain，从基础概念到生产部署 - AI Agent 开发学习平台',
   lang: 'zh-CN',
   base: '/',
   ignoreDeadLinks: true,
 
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
-    ['meta', { name: 'keywords', content: 'StatsPai,AI,Python,统计学,计量经济学,机器学习,因果推断,LangGraph,数据科学,智能体' }],
+    ['meta', { name: 'keywords', content: 'LearnGraph,AI,Python,LangGraph,LangChain,智能体,Agent,AI Agent,大模型,LLM' }],
     ['meta', { name: 'author', content: 'Bryce Wang' }],
     // 引入经典编程字体
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
@@ -77,8 +77,8 @@ export default defineConfig({
     nav: [
       { text: '《智能体搭建 & LangGraph 飞速上手》', link: '/module-1/1.1-LangGraph-上手案例' },
       { text: '《AI 时代学 Python》', link: '/python-book' },
-      { text: '《Python 与统计计量》', link: '/statistics-book' },
-      { text: '《机器学习 & 因果推断》', link: '/ml-causal-book' },
+      { text: '《LangChain 飞速上手》', link: '/langchain-book' },
+      { text: '《AI 与大模型飞速上手》', link: '/ai-llm-book' },
       { text: '🔑 API Key 配置', link: '/python-run' },
       { text: '📖 网站使用说明', link: '/' },
       { text: '关于作者', link: 'https://statspai.com' }

@@ -2,12 +2,12 @@
 layout: home
 
 hero:
-  name: "LearnPy"
-  text: "AI & 统计分析全栈学习平台"
-  tagline: 从 AI 智能体到统计计量，从 Python 到因果推断 - 打造数据科学全栈能力
+  name: "LearnGraph"
+  text: "AI 智能体开发学习平台"
+  tagline: 从 Python 基础到 LangGraph、LangChain，从基础概念到生产部署 - 快速掌握 AI Agent 开发
   image:
     src: /logo.svg
-    alt: StatsPai.com
+    alt: LearnGraph.online
   actions:
     - theme: brand
       text: 开始学习 LangGraph
@@ -15,24 +15,24 @@ hero:
 
 features:
   - icon: 🤖
-    title: AI 智能体开发
-    details: 深入学习 LangGraph、LangChain，掌握 Multi-Agent 系统设计。从基础概念到生产部署，构建真正具备自主决策能力的智能体应用。
-
-  - icon: 🐍
-    title: Python 编程基础
-    details: 零基础入门 Python，学会使用 AI 工具辅助编程。通过实战项目快速上手，专为 AI 时代设计的学习路径。
-
-  - icon: 📊
-    title: 统计学与计量经济学
-    details: 从描述性统计到推断统计，从线性回归到广义线性模型。使用 Python (pandas、statsmodels) 进行数据分析和计量建模。
-
-  - icon: 🧠
-    title: 机器学习
-    details: 监督学习、无监督学习、深度学习全覆盖。理论与实践并重，掌握算法原理的同时学会工业级应用。
+    title: LangGraph 智能体开发
+    details: 深入学习 LangGraph 和 Multi-Agent 系统设计。从基础概念到生产部署，构建真正具备自主决策能力的智能体应用。
 
   - icon: 🔗
-    title: 因果推断
-    details: 从相关到因果，从观测到实验。学习因果图、反事实推理、A/B 测试，应用于推荐系统、广告优化等实际场景。
+    title: LangChain 飞速上手
+    details: 掌握 LangChain 核心组件和设计模式。学习 Chain、Agent、Memory 等关键概念，快速构建 LLM 应用。
+
+  - icon: 🐍
+    title: AI 时代学 Python
+    details: 零基础入门 Python，学会使用 AI 工具辅助编程。通过实战项目快速上手，专为 AI 时代设计的学习路径。
+
+  - icon: 🧠
+    title: AI 与大模型入门飞速上手
+    details: 理解大语言模型的工作原理，学习 Prompt Engineering、Function Calling、RAG 等核心技术。
+
+  - icon: 💻
+    title: 在线代码运行
+    details: 网页内置 Python 环境，支持免登录运行代码。编辑、调试、学习一站式完成，无需本地配置。
 
   - icon: 💡
     title: 案例先行，通俗易懂
@@ -127,8 +127,8 @@ print(response.content)
 
 - **想学习 AI 智能体开发？** → [《智能体搭建 & LangGraph 飞速上手》](/module-1/1.1-LangGraph-上手案例)
 - **想掌握 Python 编程？** → [《AI 时代学 Python》](/python-book)（筹备中）
-- **想深入统计分析？** → [《Python 与统计计量》](/statistics-book)（筹备中）
-- **想探索机器学习和因果推断？** → [《机器学习 & 因果推断》](/ml-causal-book)（筹备中）
+- **想学习 LangChain？** → [《LangChain 飞速上手》](/langchain-book)（规划中）
+- **想入门 AI 和大模型？** → [《AI 与大模型飞速上手》](/ai-llm-book)（规划中）
 
 ---
 
@@ -136,7 +136,7 @@ print(response.content)
 
 **AI 时代，理解为王**
 
-我们相信，在 AI 辅助的时代，理解核心概念比记忆技术细节更重要。StatsPai 致力于：
+我们相信，在 AI 辅助的时代，理解核心概念比记忆技术细节更重要。LearnGraph 致力于：
 
 - ✅ **摒弃非重要细节**，直达思想内核
 - ✅ **通俗化解读**，让专业知识变得易懂
@@ -201,4 +201,4 @@ print(response.content)
 
 ---
 
-**让我们一起，在 AI 时代，通过理解而非技术细节，建立数据科学全栈能力！** 🚀
+**让我们一起，在 AI 时代，通过理解而非技术细节，快速掌握 AI Agent 开发！** 🚀

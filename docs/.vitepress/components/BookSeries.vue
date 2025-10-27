@@ -3,8 +3,8 @@
     <div class="series-header">
       <h2>📚 系列书籍</h2>
       <p>
-        构建完整的数据科学知识体系，从编程基础到前沿技术，从统计理论到工业实践。
-        每本书都注重案例驱动、通俗易懂，帮助你在 AI 时代快速建立核心竞争力。
+        从 Python 基础到 AI Agent 开发，从 LangChain 到 LangGraph，从基础概念到生产部署。
+        每本书都注重案例驱动、通俗易懂，帮助你在 AI 时代快速掌握智能体开发技能。
       </p>
     </div>
 
@@ -15,7 +15,7 @@
         <span class="book-status status-available">✅ 已发布</span>
         <p class="book-description">
           深入学习 LangGraph 和 Multi-Agent 系统开发。从基础概念到生产部署，
-          通过 6 大章节、30+ 篇详细解读，掌握智能体构建的完整技能。
+          通过 7 大章节、40+ 篇详细解读，掌握智能体构建的完整技能。
         </p>
         <a href="/module-1/1.1-LangGraph-上手案例" class="book-link">立即学习</a>
       </div>
@@ -32,40 +32,40 @@
       </div>
 
       <div class="book-card">
-        <div class="book-icon">📊</div>
-        <div class="book-title">Python 与统计计量</div>
-        <span class="book-status status-coming">📝 筹备中</span>
+        <div class="book-icon">🔗</div>
+        <div class="book-title">LangChain 飞速上手</div>
+        <span class="book-status status-planning">💭 规划中</span>
         <p class="book-description">
-          从描述性统计到计量经济学，使用 Python 进行专业的数据分析和建模。
-          涵盖概率论、假设检验、回归分析、时间序列等核心内容。
+          掌握 LangChain 核心组件和设计模式。学习 Chain、Agent、Memory 等关键概念，
+          快速构建 LLM 应用，为 LangGraph 学习打下坚实基础。
         </p>
-        <a href="/statistics-book" class="book-link coming-soon">查看详情</a>
+        <a href="/langchain-book" class="book-link coming-soon">查看详情</a>
       </div>
 
       <div class="book-card">
         <div class="book-icon">🧠</div>
-        <div class="book-title">机器学习 & 因果推断</div>
-        <span class="book-status status-coming">📝 筹备中</span>
+        <div class="book-title">AI 与大模型飞速上手</div>
+        <span class="book-status status-planning">💭 规划中</span>
         <p class="book-description">
-          从机器学习到因果推断，从理论到实践。学习监督/无监督学习、
-          因果图、A/B 测试，应用于推荐系统和策略评估等实际场景。
+          理解大语言模型的工作原理，学习 Prompt Engineering、Function Calling、RAG 等核心技术。
+          从零开始构建你的第一个 AI 应用。
         </p>
-        <a href="/ml-causal-book" class="book-link coming-soon">查看详情</a>
+        <a href="/ai-llm-book" class="book-link coming-soon">查看详情</a>
       </div>
     </div>
 
     <div class="platform-intro">
-      <h3>🎯 为什么选择 StatsPai？</h3>
+      <h3>🎯 为什么选择 LearnGraph.online？</h3>
       <div class="intro-grid">
         <div class="intro-item">
           <span class="emoji">📚</span>
           <h4>系统化学习路径</h4>
-          <p>从编程基础到前沿AI，构建完整知识体系</p>
+          <p>从 Python 基础到 AI Agent 开发，循序渐进</p>
         </div>
         <div class="intro-item">
           <span class="emoji">💻</span>
           <h4>在线代码运行</h4>
-          <p>网页内置Python环境，边学边练无需配置</p>
+          <p>网页内置 Python 环境，边学边练无需配置</p>
         </div>
         <div class="intro-item">
           <span class="emoji">🎨</span>
@@ -168,6 +168,12 @@
   background: var(--vp-c-bg);
   color: var(--vp-c-text-2);
   border: 1px solid var(--vp-c-divider);
+}
+
+.status-planning {
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-3);
+  border: 1px solid var(--vp-c-divider-light);
 }
 
 .book-description {
