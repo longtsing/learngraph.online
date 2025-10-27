@@ -11,11 +11,7 @@ hero:
   actions:
     - theme: brand
       text: 开始学习 LangGraph
-      link: /module-0/0.0-LangGraph-上手案例
-
-    - theme: alt
-      text: 📅 更新 Roadmap
-      link: /本书更新-Roadmap
+      link: /module-1/1.1-LangGraph-上手案例
 
 features:
   - icon: 🤖
@@ -49,11 +45,87 @@ import BookSeries from './docs/.vitepress/components/BookSeries.vue'
 
 <BookSeries />
 
+## 📖 网站使用说明
+
+- 本网站可以免登陆运行 Python 代码。如有报错，请到 [问题反馈](/feedback.html) 页面进行免登录登记
+- Python 代码可以编辑并临时保存，但不会永久保存，网页刷新后就会自动还原
+- 对网站使用中碰到任何问题或有任何改进意见，可以到 [问题反馈](/feedback.html) 页面进行免登录评论，或邮箱联系作者：brycew6m@gmail.com
+- 运行 `LangGraph/LangChain` 代码，需要用户保存自己的 [API Key](/python-run.html)
+- 本网站的所有基础核心功能，永久免费
+- 重要声明：本网站不会保存或获取任何用户的 API Key 数据，请放心使用
+
+### 🔑 API Key 配置与使用
+
+#### 配置 API Key
+
+点击页面右上角的 **🔑 API Keys** 按钮，可以配置以下三种 API Key：
+
+1. **OpenAI API Key** - 用于 GPT-4o、GPT-5 等模型
+2. **Anthropic API Key** - 用于 Claude 系列模型
+3. **DeepSeek API Key** - 用于 DeepSeek 系列模型（默认使用的是最新和最便宜的模型）
+
+所有 API Key 仅保存在您的浏览器本地存储（localStorage）中，网站不会上传或收集任何密钥信息。
+
+#### 代码中使用不同模型
+
+配置好 API Key 后，您可以在代码中使用不同的模型：
+
+**方式 1：使用 OpenAI 模型（整个网站默认）**
+
+```python
+import os
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    model="gpt-5",
+    api_key=os.environ.get("OPENAI_API_KEY")
+)
+response = llm.invoke("用一句话介绍 LangChain")
+print(response.content)
+```
+
+**方式 2：使用 Anthropic Claude 模型（需要用户手动编辑代码）**
+
+```python
+import os
+from langchain_anthropic import ChatAnthropic
+
+llm = ChatAnthropic(
+    model="claude-haiku-4-5",
+    api_key=os.environ.get("ANTHROPIC_API_KEY")
+)
+response = llm.invoke("用一句话介绍 LangChain")
+print(response.content)
+```
+
+**方式 3：使用 DeepSeek 模型（需要用户手动编辑代码）**
+
+```python
+import os
+from langchain_deepseek import ChatDeepSeek
+
+llm = ChatDeepSeek(
+    model="deepseek-chat",
+    api_key=os.environ.get("DEEPSEEK_API_KEY")
+)
+response = llm.invoke("用一句话介绍 LangChain")
+print(response.content)
+```
+
+#### 注意事项
+
+- 教程中的默认代码使用 OpenAI 模型
+- 您可以自由修改代码切换到其他模型
+- 系统会自动将您配置的 API Key 注入到代码中
+- 不同模型的 API 调用费用请参考各平台的定价说明
+
+---
+
 ## 🚀 快速开始
 
 选择感兴趣的书籍，立即开始学习之旅：
 
-- **想学习 AI 智能体开发？** → [《智能体搭建 & LangGraph 飞速上手》](/module-0/0.0-LangGraph-上手案例)
+- **想学习 AI 智能体开发？** → [《智能体搭建 & LangGraph 飞速上手》](/module-1/1.1-LangGraph-上手案例)
 - **想掌握 Python 编程？** → [《AI 时代学 Python》](/python-book)（筹备中）
 - **想深入统计分析？** → [《Python 与统计计量》](/statistics-book)（筹备中）
 - **想探索机器学习和因果推断？** → [《机器学习 & 因果推断》](/ml-causal-book)（筹备中）
@@ -73,6 +145,42 @@ import BookSeries from './docs/.vitepress/components/BookSeries.vue'
 
 ---
 
+## 🗓️ 更新 Roadmap
+
+### 项目简介
+
+《LangGraph 飞速上手》是一本持续更新的公开教程，致力于为中文开发者提供最通俗易懂的 LangGraph 学习资源。
+
+### 版本规划
+
+#### v0.1: 前半本书的撰写与整合（2024.6.1 - 2025.10.31）
+1. 建立完整的基础学习路径，融合 LangChain Academy 目前已有的4门官方课程，并进行通俗解读和大幅拓展
+2. 将知乎的草稿整合过来，完成第 0/1/2/3/4/5/6 章内容的撰写（**已完成**）
+3. 部署到 Vercel + 专用域名，方便国内访问（**已完成**： [learngraph.online](https://www.learngraph.online)）
+
+#### v0.2: 2025.11.1 - 2025.11.30
+1. 继续补充第 7/8/9/10 的撰写，在官方课程之外，提供更多工业级的真实案例
+2. 完成后端+前端的部署，提供 Python 环境，方便读者直接编辑并运行代码
+
+#### v1.0 : 2025.12.1 - 2025.12.31
+1. 整理早期读者的回馈，完成全书的打磨，检查代码并完成最新
+2. 正式发布整书的电子版
+3. 通过纸质版发行的立项审核
+4. 网站上增加 AI 辅助学习功能：帮助解释概念、解释报错、生成或修正代码
+
+**当前版本**：v0.1 | **下一个里程碑**：全书初稿（预计 2025年11月底）
+
+### 反馈与建议
+
+你可以通过以下方式参与：
+
+1. **GitHub Issues**：报告错误或提出建议：[项目 Issues](https://github.com/brycewang-stanford/learngraph.online/issues)
+2. **问题反馈按钮**：网站右下角浮动按钮
+3. **Email 联系**：直接联系作者：brycew6m@gmail.com
+4. **Pull Request**：直接贡献代码或文档，欢迎任何形式的改进！
+
+---
+
 ## 🤝 关于作者
 
 **王几行XING (Bryce Wang)**
@@ -80,6 +188,16 @@ import BookSeries from './docs/.vitepress/components/BookSeries.vue'
 - 📖 知乎：[@王几行XING](https://www.zhihu.com/people/brycewang1898)
 - 📧 邮箱：brycew6m@gmail.com
 - 💻 GitHub：[@brycewang-stanford](https://github.com/brycewang-stanford)
+
+---
+
+## 💌 致谢
+
+感谢所有支持本项目的朋友们！
+
+- **Star 支持**：GitHub 上的每一个 Star 都是动力
+- **反馈建议**：每一条反馈都会认真对待
+- **社区贡献**：欢迎加入共建
 
 ---
 

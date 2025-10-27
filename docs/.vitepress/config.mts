@@ -49,8 +49,8 @@ function getModuleSidebar() {
 }
 
 export default defineConfig({
-  title: 'LearnPy：AI & 统计计量',
-  description: '从 AI 智能体到统计计量，从 Python 到因果推断 - 数据科学全栈学习平台',
+  title: 'LearnGraph：智能体搭建',
+  description: '从 Pythonn 基础，到AI 和智能体系统搭建I - Agentic AI 全栈学习平台',
   lang: 'zh-CN',
   base: '/',
   ignoreDeadLinks: true,
@@ -75,12 +75,12 @@ export default defineConfig({
     logo: '/logo.svg',
     
     nav: [
-      { text: '《智能体搭建 & LangGraph 飞速上手》', link: '/module-0/0.0-LangGraph-上手案例' },
+      { text: '《智能体搭建 & LangGraph 飞速上手》', link: '/module-1/1.1-LangGraph-上手案例' },
       { text: '《AI 时代学 Python》', link: '/python-book' },
       { text: '《Python 与统计计量》', link: '/statistics-book' },
       { text: '《机器学习 & 因果推断》', link: '/ml-causal-book' },
       { text: '🔑 API Key 配置', link: '/python-run' },
-      { text: '网站使用说明', link: '/module-0/0.-1-网站使用说明.html' },
+      { text: '📖 网站使用说明', link: '/' },
       { text: '关于作者', link: 'https://statspai.com' }
     ],
     

@@ -17,7 +17,7 @@
           深入学习 LangGraph 和 Multi-Agent 系统开发。从基础概念到生产部署，
           通过 6 大章节、30+ 篇详细解读，掌握智能体构建的完整技能。
         </p>
-        <a href="/module-0/0.0-LangGraph-上手案例" class="book-link">立即学习</a>
+        <a href="/module-1/1.1-LangGraph-上手案例" class="book-link">立即学习</a>
       </div>
 
       <div class="book-card">

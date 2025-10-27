@@ -337,6 +337,6 @@ print(result["answer"])
 
 配置完成后，访问教程页面开始学习：
 
-- 🚀 [LangGraph 飞速上手](/module-0/0.0-LangGraph-上手案例)
+- 🚀 [LangGraph 飞速上手](/module-1/1.1-LangGraph-上手案例)
 - 🐍 [Python 基础入门](/module-0/0.1-Python-基础入门)
-- 📖 [第 1 章 - 基础概念](/module-1/1.1-simple-graph-最简图)
+- 📖 [第 1 章 - 基础概念](/module-2/2.1-simple-graph-最简图)
