@@ -42,7 +42,7 @@ function getBookSidebar(bookDir: string, bookName: string) {
 
     if (bookDir === 'learngraph') {
       const titles: {[key: string]: string} = {
-        '0': 'Module 0: 前言',
+        '0': 'Module 0: Python 基础',
         '1': 'Module 1: 基础概念',
         '2': 'Module 2: 核心组件',
         '3': 'Module 3: 核心机制',
