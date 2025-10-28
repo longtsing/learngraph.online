@@ -76,7 +76,7 @@ function generateSidebar() {
 }
 
 export default defineConfig({
-  title: 'LearnGraph：AI 智能体学习',
+  title: 'LearnGraph.online',
   description: '从 Python 基础到大模型应用，从 LangGraph 到智能体开发 - 系统化 AI 学习平台',
   lang: 'zh-CN',
   base: '/',
@@ -102,9 +102,9 @@ export default defineConfig({
     logo: '/logo.svg',
 
     nav: [
-      { text: '《智能体搭建 & LangGraph 飞速上手》', link: '/learngraph/README' },
-      { text: '《AI 时代学 Python》', link: '/python-fundamentals/README' },
-      { text: '《大模型飞速上手》', link: '/python-llms/README' },
+      { text: '智能体 & LangGraph 飞速上手', link: '/learngraph/README' },
+      { text: 'AI 时代学 Python', link: '/python-fundamentals/README' },
+      { text: '大模型飞速上手', link: '/python-llms/README' },
       { text: '🔑 API Key 配置', link: '/python-run' },
       { text: '关于作者', link: 'https://statspai.com' }
     ],

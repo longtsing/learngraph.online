@@ -15,7 +15,7 @@ hero:
 
 features:
   - icon: 🤖
-    title: 《智能体搭建 & LangGraph 飞速上手》
+    title: 《智能体 & LangGraph 飞速上手》
     details: 深入学习 LangGraph 和 Multi-Agent 系统开发。8 大章节，从基础概念到生产部署，掌握智能体构建完整技能。
 
   - icon: 🐍
