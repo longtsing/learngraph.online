@@ -3,54 +3,81 @@ import { fileURLToPath } from 'url'
 import path from 'path'
 import fs from 'fs'
 
-// 自动扫描 module 目录生成侧边栏
-function getModuleSidebar() {
+// 为每本书生成侧边栏
+function getBookSidebar(bookDir: string, bookName: string) {
   const rootDir = path.resolve(fileURLToPath(new URL('../..', import.meta.url)))
-  const moduleDirs = fs.readdirSync(rootDir)
-    .filter(dir => dir.startsWith('module-') && fs.statSync(path.join(rootDir, dir)).isDirectory())
+  const bookPath = path.join(rootDir, bookDir)
+
+  if (!fs.existsSync(bookPath)) {
+    return []
+  }
+
+  const moduleDirs = fs.readdirSync(bookPath)
+    .filter(dir => dir.startsWith('module-') && fs.statSync(path.join(bookPath, dir)).isDirectory())
     .sort()
-  
+
   const sidebar = []
-  
+
   for (const moduleDir of moduleDirs) {
-    const modulePath = path.join(rootDir, moduleDir)
+    const modulePath = path.join(bookPath, moduleDir)
     const files = fs.readdirSync(modulePath)
       .filter(file => file.endsWith('.md'))
       .sort()
-    
+
     if (files.length === 0) continue
-    
-    const moduleNumber = moduleDir.replace('module-', '')
+
+    const moduleNumber = moduleDir.replace(/module-(\d+).*/, '$1')
+    const moduleName = moduleDir.replace(/module-\d+-?/, '').replace(/-/g, ' ')
+
     const items = files.map(file => {
       const fileName = file.replace('.md', '')
       return {
         text: fileName,
-        link: `/${moduleDir}/${file}`
+        link: `/${bookDir}/${moduleDir}/${file}`
       }
     })
-    
-    // 自定义部分章节的分组标题
-    let moduleText = `第 ${moduleNumber} 章`
-    if (moduleNumber === '0') moduleText = '第 0 章 Python 回顾'
-    if (moduleNumber === '1') moduleText = '第 1 章 LangGraph & LangChain 基础'
-    if (moduleNumber === '2') moduleText = '第 2 章 LangGraph 核心机制'
-    if (moduleNumber === '3') moduleText = '第 3 章 Langgraph 人机协作'
-    if (moduleNumber === '4') moduleText = '第 4 章 LangGraph 高级模式'
-    if (moduleNumber === '5') moduleText = '第 5 章 LangGraph 记忆系统'
-    if (moduleNumber === '6') moduleText = '第 6 章 LangGraph 生产部署'
+
+    // 根据不同的书设置不同的章节标题
+    let moduleText = `Module ${moduleNumber}`
+
+    if (bookDir === 'learngraph') {
+      const titles: {[key: string]: string} = {
+        '0': 'Module 0: 前言',
+        '1': 'Module 1: 基础概念',
+        '2': 'Module 2: 核心组件',
+        '3': 'Module 3: 核心机制',
+        '4': 'Module 4: 人机协作',
+        '5': 'Module 5: 高级模式',
+        '6': 'Module 6: 记忆系统',
+        '7': 'Module 7: 生产部署'
+      }
+      moduleText = titles[moduleNumber] || `Module ${moduleNumber}`
+    } else if (moduleName) {
+      moduleText = `Module ${moduleNumber}: ${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)}`
+    }
+
     sidebar.push({
       text: moduleText,
       collapsed: false,
       items: items
     })
   }
-  
+
   return sidebar
 }
 
+// 生成完整的侧边栏配置
+function generateSidebar() {
+  return {
+    '/learngraph/': getBookSidebar('learngraph', '智能体搭建 & LangGraph 飞速上手'),
+    '/python-fundamentals/': getBookSidebar('python-fundamentals', 'AI 时代学 Python'),
+    '/python-llms/': getBookSidebar('python-llms', '大模型飞速上手'),
+  }
+}
+
 export default defineConfig({
-  title: 'AI 智能体学习平台',
-  description: '从 Python 基础到 LangGraph、LangChain，从基础概念到生产部署 - AI Agent 开发学习平台',
+  title: 'LearnGraph：AI 智能体学习',
+  description: '从 Python 基础到大模型应用，从 LangGraph 到智能体开发 - 系统化 AI 学习平台',
   lang: 'zh-CN',
   base: '/',
   ignoreDeadLinks: true,
@@ -70,65 +97,39 @@ export default defineConfig({
       gtag('js', new Date());
       gtag('config', 'G-W0FG0ENWH4');`]
   ],
-  
+
   themeConfig: {
     logo: '/logo.svg',
-    
+
     nav: [
-      { text: '《智能体搭建 & LangGraph 飞速上手》', link: '/module-1/1.1-LangGraph-上手案例' },
-      { text: '《AI 时代学 Python》', link: '/python-book' },
-      { text: '《LangChain 飞速上手》', link: '/langchain-book' },
-      { text: '《AI 与大模型飞速上手》', link: '/ai-llm-book' },
+      { text: '《智能体搭建 & LangGraph 飞速上手》', link: '/learngraph/README' },
+      { text: '《AI 时代学 Python》', link: '/python-fundamentals/README' },
+      { text: '《大模型飞速上手》', link: '/python-llms/README' },
       { text: '🔑 API Key 配置', link: '/python-run' },
       { text: '关于作者', link: 'https://statspai.com' }
     ],
-    
-    sidebar: getModuleSidebar(),
-    
+
+    sidebar: generateSidebar(),
+
     outline: {
       level: 'deep',
       label: '本页目录'
     },
-    
+
     socialLinks: [
       { icon: 'github', link: 'https://github.com/brycewang-stanford/learngraph.online' }
     ],
-    
+
     footer: {
       message: '基于 MIT 许可证发布。内容版权归作者所有。',
       copyright: 'Copyright © 2025-present 王几行XING（Bryce Wang）'
     },
-    
-    // 暂时禁用本地搜索（mark.js ESM 构建问题）
-    // search: {
-    //   provider: 'local',
-    //   options: {
-    //     locales: {
-    //       root: {
-    //         translations: {
-    //           button: {
-    //             buttonText: '搜索文档',
-    //             buttonAriaLabel: '搜索文档'
-    //           },
-    //           modal: {
-    //             noResultsText: '无法找到相关结果',
-    //             resetButtonTitle: '清除查询条件',
-    //             footer: {
-    //               selectText: '选择',
-    //               navigateText: '切换'
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // },
-    
+
     docFooter: {
       prev: '上一页',
       next: '下一页'
     },
-    
+
     lastUpdated: {
       text: '最后更新于',
       formatOptions: {
@@ -136,13 +137,13 @@ export default defineConfig({
         timeStyle: 'short'
       }
     },
-    
+
     editLink: {
       pattern: 'https://github.com/brycewang-stanford/learngraph.online/edit/main/:path',
       text: '在 GitHub 上编辑此页'
     }
   },
-  
+
   markdown: {
     lineNumbers: true,
     theme: {
@@ -151,6 +152,6 @@ export default defineConfig({
     }
   },
 
-  // 设置文档根目录为项目根目录，这样可以直接访问 module-x 目录
+  // 设置文档根目录为项目根目录，这样可以直接访问各个书的目录
   srcDir: '..'
 })

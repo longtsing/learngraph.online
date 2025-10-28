@@ -11,28 +11,28 @@ hero:
   actions:
     - theme: brand
       text: 开始学习 LangGraph
-      link: /module-1/1.1-LangGraph-上手案例
+      link: /learngraph/README
 
 features:
   - icon: 🤖
-    title: LangGraph 智能体开发
-    details: 深入学习 LangGraph 和 Multi-Agent 系统设计。从基础概念到生产部署，构建真正具备自主决策能力的智能体应用。
-
-  - icon: 🔗
-    title: LangChain 飞速上手
-    details: 掌握 LangChain 核心组件和设计模式。学习 Chain、Agent、Memory 等关键概念，快速构建 LLM 应用。
+    title: 《智能体搭建 & LangGraph 飞速上手》
+    details: 深入学习 LangGraph 和 Multi-Agent 系统开发。8 大章节，从基础概念到生产部署，掌握智能体构建完整技能。
 
   - icon: 🐍
-    title: AI 时代学 Python
-    details: 零基础入门 Python，学会使用 AI 工具辅助编程。通过实战项目快速上手，专为 AI 时代设计的学习路径。
+    title: 《AI 时代学 Python》
+    details: 零基础入门 Python，学会使用 AI 工具辅助编程。10 大章节，通过实战项目快速上手，专为 AI 时代设计。
 
   - icon: 🧠
-    title: AI 与大模型入门飞速上手
-    details: 理解大语言模型的工作原理，学习 Prompt Engineering、Function Calling、RAG 等核心技术。
+    title: 《大模型飞速上手》
+    details: 理解大语言模型工作原理，掌握 Prompt Engineering、RAG、Function Calling 等核心技术。10 大章节，从零构建 AI 应用。
 
   - icon: 💻
     title: 在线代码运行
     details: 网页内置 Python 环境，支持免登录运行代码。编辑、调试、学习一站式完成，无需本地配置。
+
+  - icon: 📚
+    title: 系统化学习路径
+    details: 三本书覆盖 Python 基础、大模型应用、智能体开发。循序渐进，构建完整的 AI 开发知识体系。
 
   - icon: 💡
     title: 案例先行，通俗易懂
@@ -125,10 +125,9 @@ print(response.content)
 
 选择感兴趣的书籍，立即开始学习之旅：
 
-- **想学习 AI 智能体开发？** → [《智能体搭建 & LangGraph 飞速上手》](/module-1/1.1-LangGraph-上手案例)
-- **想掌握 Python 编程？** → [《AI 时代学 Python》](/python-book)（筹备中）
-- **想学习 LangChain？** → [《LangChain 飞速上手》](/langchain-book)（规划中）
-- **想入门 AI 和大模型？** → [《AI 与大模型飞速上手》](/ai-llm-book)（规划中）
+- **想学习 AI 智能体开发？** → [《智能体搭建 & LangGraph 飞速上手》](/learngraph/README)
+- **想掌握 Python 编程？** → [《AI 时代学 Python》](/python-fundamentals/README)（筹备中）
+- **想入门大模型应用？** → [《大模型飞速上手》](/python-llms/README)（规划中）
 
 ---
 

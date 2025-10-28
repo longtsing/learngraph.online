@@ -3,8 +3,8 @@
     <div class="series-header">
       <h2>📚 系列书籍</h2>
       <p>
-        从 Python 基础到 AI Agent 开发，从 LangChain 到 LangGraph，从基础概念到生产部署。
-        每本书都注重案例驱动、通俗易懂，帮助你在 AI 时代快速掌握智能体开发技能。
+        从 Python 基础到大模型应用，从 LangGraph 到智能体开发。
+        三本书系统化构建 AI 开发全栈能力，案例驱动、通俗易懂。
       </p>
     </div>
 
@@ -15,9 +15,9 @@
         <span class="book-status status-available">✅ 已发布</span>
         <p class="book-description">
           深入学习 LangGraph 和 Multi-Agent 系统开发。从基础概念到生产部署，
-          通过 7 大章节、40+ 篇详细解读，掌握智能体构建的完整技能。
+          通过 8 大章节、40+ 篇详细解读，掌握智能体构建的完整技能。
         </p>
-        <a href="/module-1/1.1-LangGraph-上手案例" class="book-link">立即学习</a>
+        <a href="/learngraph/README" class="book-link">立即学习</a>
       </div>
 
       <div class="book-card">
@@ -26,41 +26,30 @@
         <span class="book-status status-coming">📝 筹备中</span>
         <p class="book-description">
           零基础入门 Python，学会使用 AI 工具辅助编程。
-          通过实战项目快速上手，专为 AI 时代设计的学习路径。
+          通过 10 大章节、实战项目快速上手，专为 AI 时代设计的学习路径。
         </p>
-        <a href="/python-book" class="book-link coming-soon">查看详情</a>
-      </div>
-
-      <div class="book-card">
-        <div class="book-icon">🔗</div>
-        <div class="book-title">LangChain 飞速上手</div>
-        <span class="book-status status-planning">💭 规划中</span>
-        <p class="book-description">
-          掌握 LangChain 核心组件和设计模式。学习 Chain、Agent、Memory 等关键概念，
-          快速构建 LLM 应用，为 LangGraph 学习打下坚实基础。
-        </p>
-        <a href="/langchain-book" class="book-link coming-soon">查看详情</a>
+        <a href="/python-fundamentals/README" class="book-link coming-soon">查看详情</a>
       </div>
 
       <div class="book-card">
         <div class="book-icon">🧠</div>
-        <div class="book-title">AI 与大模型飞速上手</div>
+        <div class="book-title">大模型飞速上手</div>
         <span class="book-status status-planning">💭 规划中</span>
         <p class="book-description">
           理解大语言模型的工作原理，学习 Prompt Engineering、Function Calling、RAG 等核心技术。
-          从零开始构建你的第一个 AI 应用。
+          通过 10 大章节，从零开始构建你的第一个 AI 应用。
         </p>
-        <a href="/ai-llm-book" class="book-link coming-soon">查看详情</a>
+        <a href="/python-llms/README" class="book-link coming-soon">查看详情</a>
       </div>
     </div>
 
     <div class="platform-intro">
-      <h3>🎯 为什么选择 LearnGraph.online？</h3>
+      <h3>🎯 为什么选择 LearnGraph？</h3>
       <div class="intro-grid">
         <div class="intro-item">
           <span class="emoji">📚</span>
           <h4>系统化学习路径</h4>
-          <p>从 Python 基础到 AI Agent 开发，循序渐进</p>
+          <p>从 Python 基础到大模型应用，三本书构建完整知识体系</p>
         </div>
         <div class="intro-item">
           <span class="emoji">💻</span>
