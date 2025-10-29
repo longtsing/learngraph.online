@@ -8,10 +8,10 @@ python-dotenv==1.0.0
 PyYAML>=6.0.2
 
 # LangChain dependencies for code execution (auto-upgrade to latest)
-langchain-openai
-langchain-anthropic
-langchain-deepseek
-langchain-core
-langchain-community
-langgraph
-tavily-python
+langchain-openai==1.0.1
+langchain-anthropic==1.0.0
+langchain-deepseek==1.0.0
+langchain-core==1.0.1
+langchain-community==0.4.1
+langgraph==1.0.1
+tavily-python==0.7.12
