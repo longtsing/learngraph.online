@@ -705,7 +705,7 @@ function clearOutput() {
   padding: 16px;
   max-height: 400px;
   overflow-y: auto;
-  background: var(--vp-c-bg);
+  background: #dcfce7; /* 更明显的淡绿色背景 - 亮色主题 */
 }
 
 .normal-output pre,
@@ -720,6 +720,10 @@ function clearOutput() {
 
 .normal-output pre {
   color: var(--vp-c-text-1);
+  background: #dcfce7; /* 更明显的淡绿色背景 */
+  padding: 12px;
+  border-radius: 4px;
+  border-left: 4px solid #10b981;
 }
 
 .error-output {
@@ -784,6 +788,16 @@ function clearOutput() {
 }
 
 /* 暗色主题 */
+.dark .output-content {
+  background: #065f46; /* 更明显的深绿色背景 - 暗色主题 */
+}
+
+.dark .normal-output pre {
+  background: #065f46; /* 更明显的深绿色背景 */
+  color: #d1fae5;
+  border-left-color: #10b981;
+}
+
 .dark .error-output {
   background: #7f1d1d;
   border-left-color: #ef4444;
