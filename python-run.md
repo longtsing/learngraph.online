@@ -136,7 +136,7 @@ function maskKey(key) {
         {{ showOpenAI ? '🙈' : '👁️' }}
       </button>
     </div>
-    <small style="font-size: 12px; color: var(--vp-c-text-2); margin-top: 6px; display: block;">用于 GPT-3.5、GPT-4 等 OpenAI 模型</small>
+    <small style="font-size: 12px; color: var(--vp-c-text-2); margin-top: 6px; display: block;">用于 GPT-5、GPT-4o 等 OpenAI 模型</small>
   </div>
 
   <!-- Anthropic API Key -->
