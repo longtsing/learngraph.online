@@ -5,7 +5,6 @@ FastAPI 后端服务 - Python 代码执行 API + GitHub 编辑功能
 
 from fastapi import FastAPI, HTTPException, Header, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 import subprocess
 import tempfile
@@ -34,23 +33,30 @@ logger = logging.getLogger(__name__)
 GITHUB_CLIENT_ID = os.getenv("GITHUB_CLIENT_ID_PROD")
 GITHUB_CLIENT_SECRET = os.getenv("GITHUB_CLIENT_SECRET_PROD")
 GITHUB_REPO_OWNER = "brycewang-stanford"
-GITHUB_REPO_NAME = "learngraph.online"
+GITHUB_REPO_NAME = "LearnPy.online"
 ADMIN_EMAIL = "brycew6m@gmail.com"
 
 app = FastAPI(
     title="Python Code Executor API + GitHub Editor",
     description="安全的 Python 代码执行服务 + GitHub 仓库编辑功能",
-    version="2.0.0"
+    version="2.2.0"
 )
+
+# R 语言支持已移除以提升性能
+# 如需 R 支持，请取消注释以下代码：
+# from r_api_routes import router as r_router
+# app.include_router(r_router, prefix="/api/r", tags=["R Code Execution"])
 
 # 配置 CORS - 使用正则表达式支持 Vercel 子域名
 def is_allowed_origin(origin: str) -> bool:
     """检查请求来源是否允许"""
     allowed_origins = [
         "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
         "http://localhost:4173",
-        "https://learngraph.online",
-        "https://www.learngraph.online",
+        "https://learnpy.online",
+        "https://www.learnpy.online",
     ]
 
     # 检查是否在允许列表中
@@ -72,8 +78,8 @@ app.add_middleware(
         "http://localhost:5174",  # 本地开发（备用端口）
         "http://localhost:5175",  # 本地开发（备用端口）
         "http://localhost:4173",  # 本地预览（production preview）
-        "https://learngraph.online",  # 生产环境
-        "https://www.learngraph.online",  # 生产环境 www
+        "https://learnpy.online",  # 生产环境
+        "https://www.learnpy.online",  # 生产环境 www
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -94,25 +100,23 @@ class CodeExecutionResponse(BaseModel):
     images: Optional[list[str]] = None  # Base64 编码的图片列表
 
 
-# ============================================
-# Chatbot 功能 - AI 助手对话
-# ============================================
-
-class ChatMessage(BaseModel):
+# 代码解释 AI 请求模型
+class Message(BaseModel):
     role: str = Field(..., description="消息角色：user 或 assistant")
     content: str = Field(..., description="消息内容")
 
 
-class ChatRequest(BaseModel):
-    messages: list[ChatMessage] = Field(..., description="对话历史")
+class CodeExplainRequest(BaseModel):
+    code: str = Field(..., description="要解释的 Python 代码")
+    messages: list[Message] = Field(default_factory=list, description="对话历史")
     user_question: str = Field(..., description="用户的问题")
-    context: Optional[str] = Field(None, description="上下文信息（可选）")
 
 
-class ChatResponse(BaseModel):
+class CodeExplainResponse(BaseModel):
     success: bool
     response: Optional[str] = None
     error: Optional[str] = None
+    has_code: bool = False  # 响应中是否包含可执行代码
 
 
 @app.get("/")
@@ -130,9 +134,10 @@ async def health_check():
     """详细的健康检查"""
     return {
         "status": "ok",
-        "python_version": "3.11",
+        "python_version": "3.13",
         "max_timeout": 300,  # 5分钟
-        "features": ["code_execution", "docker_sandbox", "ai_chatbot"]
+        "features": ["code_execution", "docker_sandbox"],
+        "note": "R execution removed for performance optimization"
     }
 
 
@@ -155,8 +160,6 @@ async def execute_code(
     """
     import time
     start_time = time.time()
-
-    logger.info(f"Executing code with timeout: {request.timeout}s")
 
     # 1. 代码安全验证
     is_safe, error_message = CodeValidator.validate(request.code)
@@ -242,13 +245,10 @@ sys.modules['IPython.display'] = IPythonDisplay
             # 如果提供了 API Keys，添加到环境变量
             if x_openai_api_key:
                 env['OPENAI_API_KEY'] = x_openai_api_key
-                logger.info("OpenAI API Key provided")
             if x_anthropic_api_key:
                 env['ANTHROPIC_API_KEY'] = x_anthropic_api_key
-                logger.info("Anthropic API Key provided")
             if x_deepseek_api_key:
                 env['DEEPSEEK_API_KEY'] = x_deepseek_api_key
-                logger.info("DeepSeek API Key provided")
 
             # 执行 Python 代码
             import sys
@@ -347,7 +347,7 @@ async def execute_code_docker(request: CodeExecutionRequest):
                 '--cpus', '0.5',      # 限制 CPU
                 '--pids-limit', '50', # 限制进程数
                 '-v', f'{code_file}:/code.py:ro',  # 只读挂载
-                'python:3.11-slim',
+                'python:3.13-slim',
                 'python', '/code.py'
             ]
 
@@ -393,6 +393,118 @@ async def execute_code_docker(request: CodeExecutionRequest):
             success=False,
             error=f"执行错误: {str(e)}",
             execution_time=round(execution_time, 3)
+        )
+
+
+# ============================================
+# 代码解释 AI 功能
+# ============================================
+
+@app.post("/api/chat/explain-code", response_model=CodeExplainResponse)
+async def explain_code(
+    request: CodeExplainRequest,
+    x_openai_api_key: Optional[str] = Header(None)
+):
+    """
+    使用 GPT-4 解释 Python 代码
+
+    支持多轮对话，可以提取响应中的可执行代码
+    """
+    try:
+        # 检查 OpenAI API Key
+        api_key = x_openai_api_key or os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            return CodeExplainResponse(
+                success=False,
+                error="❌ 需要 OpenAI API Key\n\n请访问导航栏的 \"⚡ Python 运行器\" 页面配置 API Key"
+            )
+
+        # 构建对话历史
+        messages = [
+            {
+                "role": "system",
+                "content": """你是一个Python代码解释专家。你的任务是帮助用户理解和解释Python代码。
+
+重要规则：
+1. 如果用户只是问问题或需要解释，用清晰简洁的中文回答，不要返回代码
+2. 只有在以下情况才返回Python代码：
+   - 用户明确要求"添加注释"、"注释代码"、"加上解释"
+   - 用户要求"改进代码"、"优化代码"、"修复代码"
+   - 用户要求生成新的代码示例
+3. 返回代码时，必须用```python和```包裹
+4. 解释要通俗易懂，适合初学者
+5. 如果代码有问题，指出问题并建议改进
+
+例子：
+用户："这个装饰器什么意思？" -> 只解释，不返回代码
+用户："帮我给代码加上注释" -> 返回带注释的完整代码"""
+            }
+        ]
+
+        # 添加历史对话
+        for msg in request.messages:
+            messages.append({"role": msg.role, "content": msg.content})
+
+        # 添加当前用户问题（包含代码上下文）
+        user_message = f"""Python代码：
+```python
+{request.code}
+```
+
+用户问题：{request.user_question}"""
+
+        messages.append({"role": "user", "content": user_message})
+
+        # 调用 OpenAI API
+        logger.info(f"Calling OpenAI API for code explanation")
+        response = requests.post(
+            "https://api.openai.com/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": "gpt-4o",  # 使用 GPT-4
+                "messages": messages,
+                "temperature": 0.7,
+                "max_tokens": 2000
+            },
+            timeout=60
+        )
+
+        if response.status_code != 200:
+            error_detail = response.json().get("error", {}).get("message", "Unknown error")
+            logger.error(f"OpenAI API error: {error_detail}")
+            return CodeExplainResponse(
+                success=False,
+                error=f"OpenAI API 错误: {error_detail}"
+            )
+
+        result = response.json()
+        ai_response = result["choices"][0]["message"]["content"]
+
+        # 检测响应中是否包含代码块
+        has_code = "```python" in ai_response
+
+        logger.info(f"Code explanation completed, has_code: {has_code}")
+
+        return CodeExplainResponse(
+            success=True,
+            response=ai_response,
+            has_code=has_code
+        )
+
+    except requests.exceptions.Timeout:
+        logger.error("OpenAI API timeout")
+        return CodeExplainResponse(
+            success=False,
+            error="⏱️ 请求超时，请稍后重试"
+        )
+    except Exception as e:
+        logger.error(f"Code explanation error: {str(e)}")
+        return CodeExplainResponse(
+            success=False,
+            error=f"错误: {str(e)}"
         )
 
 
@@ -608,356 +720,6 @@ async def get_file(file_path: str, token: str = Depends(verify_admin)):
     except Exception as e:
         logger.error(f"File get error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"获取文件失败: {str(e)}")
-
-
-# ============================================
-# Chatbot AI 助手功能
-# ============================================
-
-@app.post("/api/chat/ask/stream")
-async def chat_ask_stream(
-    request: ChatRequest,
-    x_openai_api_key: Optional[str] = Header(None),
-    x_anthropic_api_key: Optional[str] = Header(None),
-    x_deepseek_api_key: Optional[str] = Header(None)
-):
-    """
-    AI 助手对话接口 - 流式响应版本 (SSE)
-
-    支持多个 AI 提供商的流式响应:
-    - OpenAI (GPT-4o) - streaming
-    - DeepSeek - streaming
-    - Anthropic (Claude) - streaming
-
-    优先级：DeepSeek > OpenAI > Anthropic
-    """
-
-    async def generate():
-        try:
-            # 检查 API Key
-            api_key = None
-            provider = None
-
-            if x_deepseek_api_key:
-                api_key = x_deepseek_api_key
-                provider = "deepseek"
-            elif x_openai_api_key:
-                api_key = x_openai_api_key
-                provider = "openai"
-            elif x_anthropic_api_key:
-                api_key = x_anthropic_api_key
-                provider = "anthropic"
-            else:
-                if os.getenv("DEEPSEEK_API_KEY"):
-                    api_key = os.getenv("DEEPSEEK_API_KEY")
-                    provider = "deepseek"
-                elif os.getenv("OPENAI_API_KEY"):
-                    api_key = os.getenv("OPENAI_API_KEY")
-                    provider = "openai"
-                elif os.getenv("ANTHROPIC_API_KEY"):
-                    api_key = os.getenv("ANTHROPIC_API_KEY")
-                    provider = "anthropic"
-
-            if not api_key:
-                yield f"data: {json.dumps({'error': '❌ 需要 API Key'})}\n\n"
-                return
-
-            # 构建消息
-            messages = [
-                {
-                    "role": "system",
-                    "content": """你是 LearnGraph.online 的 AI 助手，专门帮助用户学习 LangGraph 和 AI Agent 开发。
-
-你的职责：
-1. 回答关于 LangGraph、LangChain、AI Agent 的问题
-2. 解释代码示例和概念
-3. 提供学习建议和最佳实践
-4. 帮助调试代码问题
-5. 改进和优化 Python 代码
-
-回答原则：
-- 用清晰、简洁的中文回答
-- 提供实用的代码示例
-- 循序渐进，适合不同水平的学习者
-- 如果不确定，诚实地说明并建议查阅官方文档
-- 当用户要求改进代码时，返回完整的、可执行的代码"""
-                }
-            ]
-
-            for msg in request.messages:
-                messages.append({"role": msg.role, "content": msg.content})
-
-            user_message = request.user_question
-            if request.context:
-                user_message = f"""上下文：
-{request.context}
-
-用户问题：{request.user_question}"""
-
-            messages.append({"role": "user", "content": user_message})
-
-            # 使用流式 API
-            if provider in ["deepseek", "openai"]:
-                # OpenAI 兼容的流式 API
-                url = "https://api.deepseek.com/v1/chat/completions" if provider == "deepseek" else "https://api.openai.com/v1/chat/completions"
-                model = "deepseek-chat" if provider == "deepseek" else "gpt-4o"
-
-                import httpx
-                async with httpx.AsyncClient() as client:
-                    async with client.stream(
-                        "POST",
-                        url,
-                        headers={
-                            "Authorization": f"Bearer {api_key}",
-                            "Content-Type": "application/json"
-                        },
-                        json={
-                            "model": model,
-                            "messages": messages,
-                            "temperature": 0.7,
-                            "max_tokens": 2000,
-                            "stream": True
-                        },
-                        timeout=60.0
-                    ) as response:
-                        async for line in response.aiter_lines():
-                            if line.startswith("data: "):
-                                data = line[6:]
-                                if data == "[DONE]":
-                                    break
-                                try:
-                                    chunk = json.loads(data)
-                                    if "choices" in chunk and len(chunk["choices"]) > 0:
-                                        delta = chunk["choices"][0].get("delta", {})
-                                        content = delta.get("content", "")
-                                        if content:
-                                            yield f"data: {json.dumps({'content': content})}\n\n"
-                                except json.JSONDecodeError:
-                                    continue
-
-            elif provider == "anthropic":
-                # Anthropic 流式 API
-                system_message = messages[0]["content"] if messages[0]["role"] == "system" else ""
-                claude_messages = [{"role": m["role"], "content": m["content"]}
-                                 for m in messages if m["role"] != "system"]
-
-                import httpx
-                async with httpx.AsyncClient() as client:
-                    async with client.stream(
-                        "POST",
-                        "https://api.anthropic.com/v1/messages",
-                        headers={
-                            "x-api-key": api_key,
-                            "anthropic-version": "2023-06-01",
-                            "Content-Type": "application/json"
-                        },
-                        json={
-                            "model": "claude-3-5-sonnet-20241022",
-                            "max_tokens": 2000,
-                            "system": system_message,
-                            "messages": claude_messages,
-                            "stream": True
-                        },
-                        timeout=60.0
-                    ) as response:
-                        async for line in response.aiter_lines():
-                            if line.startswith("data: "):
-                                data = line[6:]
-                                try:
-                                    chunk = json.loads(data)
-                                    if chunk.get("type") == "content_block_delta":
-                                        content = chunk.get("delta", {}).get("text", "")
-                                        if content:
-                                            yield f"data: {json.dumps({'content': content})}\n\n"
-                                except json.JSONDecodeError:
-                                    continue
-
-            yield f"data: {json.dumps({'done': True})}\n\n"
-
-        except Exception as e:
-            logger.error(f"Streaming chat error: {str(e)}")
-            yield f"data: {json.dumps({'error': f'错误: {str(e)}'})}\n\n"
-
-    return StreamingResponse(generate(), media_type="text/event-stream")
-
-
-@app.post("/api/chat/ask", response_model=ChatResponse)
-async def chat_ask(
-    request: ChatRequest,
-    x_openai_api_key: Optional[str] = Header(None),
-    x_anthropic_api_key: Optional[str] = Header(None),
-    x_deepseek_api_key: Optional[str] = Header(None)
-):
-    """
-    AI 助手对话接口
-
-    支持多个 AI 提供商：
-    - OpenAI (GPT-4o)
-    - Anthropic (Claude)
-    - DeepSeek
-
-    优先级：DeepSeek > OpenAI > Anthropic
-    """
-    try:
-        # 检查 API Key - 优先使用 DeepSeek
-        api_key = None
-        provider = None
-
-        if x_deepseek_api_key:
-            api_key = x_deepseek_api_key
-            provider = "deepseek"
-            logger.info("Using DeepSeek API")
-        elif x_openai_api_key:
-            api_key = x_openai_api_key
-            provider = "openai"
-            logger.info("Using OpenAI API")
-        elif x_anthropic_api_key:
-            api_key = x_anthropic_api_key
-            provider = "anthropic"
-            logger.info("Using Anthropic API")
-        else:
-            # 尝试从环境变量获取
-            if os.getenv("DEEPSEEK_API_KEY"):
-                api_key = os.getenv("DEEPSEEK_API_KEY")
-                provider = "deepseek"
-            elif os.getenv("OPENAI_API_KEY"):
-                api_key = os.getenv("OPENAI_API_KEY")
-                provider = "openai"
-            elif os.getenv("ANTHROPIC_API_KEY"):
-                api_key = os.getenv("ANTHROPIC_API_KEY")
-                provider = "anthropic"
-
-        if not api_key:
-            return ChatResponse(
-                success=False,
-                error="❌ 需要 API Key\n\n请配置 OpenAI、Anthropic 或 DeepSeek API Key"
-            )
-
-        # 构建对话历史
-        messages = [
-            {
-                "role": "system",
-                "content": """你是 LearnGraph.online 的 AI 助手，专门帮助用户学习 LangGraph 和 AI Agent 开发。
-
-你的职责：
-1. 回答关于 LangGraph、LangChain、AI Agent 的问题
-2. 解释代码示例和概念
-3. 提供学习建议和最佳实践
-4. 帮助调试代码问题
-
-回答原则：
-- 用清晰、简洁的中文回答
-- 提供实用的代码示例
-- 循序渐进，适合不同水平的学习者
-- 如果不确定，诚实地说明并建议查阅官方文档"""
-            }
-        ]
-
-        # 添加历史对话
-        for msg in request.messages:
-            messages.append({"role": msg.role, "content": msg.content})
-
-        # 添加当前用户问题
-        user_message = request.user_question
-        if request.context:
-            user_message = f"""上下文：
-{request.context}
-
-用户问题：{request.user_question}"""
-
-        messages.append({"role": "user", "content": user_message})
-
-        # 根据提供商调用不同的 API
-        if provider == "deepseek":
-            # DeepSeek API (兼容 OpenAI 格式)
-            response = requests.post(
-                "https://api.deepseek.com/v1/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {api_key}",
-                    "Content-Type": "application/json"
-                },
-                json={
-                    "model": "deepseek-chat",
-                    "messages": messages,
-                    "temperature": 0.7,
-                    "max_tokens": 2000
-                },
-                timeout=60
-            )
-        elif provider == "openai":
-            # OpenAI API
-            response = requests.post(
-                "https://api.openai.com/v1/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {api_key}",
-                    "Content-Type": "application/json"
-                },
-                json={
-                    "model": "gpt-4o",
-                    "messages": messages,
-                    "temperature": 0.7,
-                    "max_tokens": 2000
-                },
-                timeout=60
-            )
-        else:  # anthropic
-            # Anthropic API (Claude)
-            # 转换消息格式 (Anthropic 需要单独的 system 参数)
-            system_message = messages[0]["content"] if messages[0]["role"] == "system" else ""
-            claude_messages = [{"role": m["role"], "content": m["content"]}
-                             for m in messages if m["role"] != "system"]
-
-            response = requests.post(
-                "https://api.anthropic.com/v1/messages",
-                headers={
-                    "x-api-key": api_key,
-                    "anthropic-version": "2023-06-01",
-                    "Content-Type": "application/json"
-                },
-                json={
-                    "model": "claude-3-5-sonnet-20241022",
-                    "max_tokens": 2000,
-                    "system": system_message,
-                    "messages": claude_messages
-                },
-                timeout=60
-            )
-
-        if response.status_code != 200:
-            error_detail = response.json().get("error", {}).get("message", "Unknown error")
-            logger.error(f"{provider.upper()} API error: {error_detail}")
-            return ChatResponse(
-                success=False,
-                error=f"{provider.upper()} API 错误: {error_detail}"
-            )
-
-        result = response.json()
-
-        # 提取响应内容（不同提供商格式不同）
-        if provider == "anthropic":
-            ai_response = result["content"][0]["text"]
-        else:  # openai, deepseek
-            ai_response = result["choices"][0]["message"]["content"]
-
-        logger.info(f"Chat response completed using {provider}")
-
-        return ChatResponse(
-            success=True,
-            response=ai_response
-        )
-
-    except requests.exceptions.Timeout:
-        logger.error("API timeout")
-        return ChatResponse(
-            success=False,
-            error="⏱️ 请求超时，请稍后重试"
-        )
-    except Exception as e:
-        logger.error(f"Chat error: {str(e)}")
-        return ChatResponse(
-            success=False,
-            error=f"错误: {str(e)}"
-        )
 
 
 if __name__ == "__main__":

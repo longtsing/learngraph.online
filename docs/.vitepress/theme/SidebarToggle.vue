@@ -18,7 +18,7 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue'
-import { useRoute, useData } from 'vitepress'
+import { useRoute } from 'vitepress'
 import { useSidebar } from 'vitepress/theme'
 
 const route = useRoute()
@@ -28,32 +28,61 @@ const isCollapsed = ref(false)
 // 保存/恢复折叠状态
 const STORAGE_KEY = 'vitepress-sidebar-collapsed'
 
+// 动态获取侧边栏宽度
+function getSidebarWidth() {
+  const sidebar = document.querySelector('.VPSidebar')
+  if (!sidebar) return 380 // 默认宽度
+
+  const rect = sidebar.getBoundingClientRect()
+  return rect.width
+}
+
+// 更新按钮位置
+function updateButtonPosition(collapsed) {
+  const toggleBtn = document.querySelector('.sidebar-toggle-btn')
+  if (!toggleBtn) return
+
+  if (collapsed) {
+    toggleBtn.style.left = '0'  // 折叠时贴最左边
+  } else {
+    const sidebarWidth = getSidebarWidth()
+    toggleBtn.style.left = `${sidebarWidth}px`  // 展开时在侧边栏右侧
+  }
+  toggleBtn.style.transition = 'left 0.3s ease'
+}
+
 onMounted(() => {
   // 从 localStorage 恢复状态
   const saved = localStorage.getItem(STORAGE_KEY)
   if (saved === 'true') {
     isCollapsed.value = true
-    // 延迟一下确保 DOM 完全加载
+    // 延迟确保 DOM 完全加载
     setTimeout(() => applySidebarState(true), 100)
   } else {
-    // 确保按钮在正确位置 - 继续右移10px
-    const toggleBtn = document.querySelector('.sidebar-toggle-btn')
-    if (toggleBtn) {
-      toggleBtn.style.left = '380px'
-    }
+    // 初始化按钮位置
+    setTimeout(() => updateButtonPosition(false), 100)
   }
+
+  // 监听窗口大小变化，重新计算按钮位置
+  window.addEventListener('resize', () => {
+    if (!isCollapsed.value) {
+      updateButtonPosition(false)
+    }
+  })
 })
 
 // 监听路由变化，确保状态保持
 watch(() => route.path, () => {
-  if (isCollapsed.value) {
-    setTimeout(() => applySidebarState(true), 100)
-  }
+  setTimeout(() => {
+    applySidebarState(isCollapsed.value)
+    updateButtonPosition(isCollapsed.value)
+  }, 100)
 })
 
 function toggleSidebar() {
   isCollapsed.value = !isCollapsed.value
   applySidebarState(isCollapsed.value)
+  updateButtonPosition(isCollapsed.value)
   // 保存状态
   localStorage.setItem(STORAGE_KEY, isCollapsed.value.toString())
 }
@@ -61,26 +90,20 @@ function toggleSidebar() {
 function applySidebarState(collapsed) {
   const sidebar = document.querySelector('.VPSidebar')
   const content = document.querySelector('.VPContent')
-  const doc = document.querySelector('.VPDoc')
-  const toggleBtn = document.querySelector('.sidebar-toggle-btn')
 
   if (!sidebar) return
 
+  const sidebarWidth = getSidebarWidth()
+
   if (collapsed) {
-    // 收起侧边栏 - 完全隐藏380px位置的侧边栏（按钮原本在380px）
-    sidebar.style.transform = 'translateX(-380px)'
+    // 收起侧边栏 - 向左移出屏幕
+    sidebar.style.transform = `translateX(-${sidebarWidth}px)`
     sidebar.style.transition = 'transform 0.3s ease'
 
-    // 调整内容区域 - 利用全屏宽度，从按钮右边开始
+    // 调整内容区域 - 利用全屏宽度
     if (content) {
       content.style.paddingLeft = '24px'
       content.style.transition = 'padding-left 0.3s ease'
-    }
-
-    // 调整按钮位置 - 折叠后按钮贴在最左边
-    if (toggleBtn) {
-      toggleBtn.style.left = '0'
-      toggleBtn.style.transition = 'left 0.3s ease'
     }
   } else {
     // 展开侧边栏
@@ -90,11 +113,6 @@ function applySidebarState(collapsed) {
     if (content) {
       content.style.paddingLeft = ''
     }
-
-    // 恢复按钮位置 - 继续右移10px
-    if (toggleBtn) {
-      toggleBtn.style.left = '380px'
-    }
   }
 }
 </script>
@@ -102,8 +120,8 @@ function applySidebarState(collapsed) {
 <style scoped>
 .sidebar-toggle-btn {
   position: fixed;
-  left: 380px;
-  top: 50%;
+  /* left 由 JavaScript 动态设置 */
+  top: 50%;  /* 垂直居中 */
   transform: translateY(-50%);
   z-index: 50;
   width: 20px;
@@ -118,6 +136,7 @@ function applySidebarState(collapsed) {
   justify-content: center;
   transition: all 0.25s ease, left 0.3s ease;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+  opacity: 0.8;
 }
 
 .sidebar-toggle-btn:hover {
@@ -125,6 +144,7 @@ function applySidebarState(collapsed) {
   background: var(--vp-c-brand-1);
   box-shadow: 3px 0 12px rgba(0, 0, 0, 0.15);
   border-color: var(--vp-c-brand-1);
+  opacity: 1;
 }
 
 .icon {
@@ -146,7 +166,7 @@ function applySidebarState(collapsed) {
   }
 }
 
-/* 暗黑模式 */
+/* 暗黑模式优化 */
 .dark .sidebar-toggle-btn {
   background: var(--vp-c-bg-soft);
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);

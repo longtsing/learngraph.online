@@ -15,6 +15,13 @@
       </div>
       <div class="code-actions">
         <button
+          @click="openAIAssistant"
+          class="action-button ai-button"
+          title="AI 助手 - 改进和编辑代码"
+        >
+          🤖 AI 助手
+        </button>
+        <button
           @click="toggleEdit"
           class="action-button edit-button"
           :title="isEditing ? '保存代码' : '编辑代码（临时修改）'"
@@ -78,6 +85,13 @@
       </div>
       <div class="code-actions">
         <button
+          @click="openAIAssistant"
+          class="action-button ai-button"
+          title="AI 助手 - 改进和编辑代码"
+        >
+          🤖 AI 助手
+        </button>
+        <button
           @click="toggleEdit"
           class="action-button edit-button"
           :title="isEditing ? '保存代码' : '编辑代码（临时修改）'"
@@ -109,6 +123,14 @@
         </button>
       </div>
     </div>
+
+    <!-- AI Assistant Dialog -->
+    <CodeAssistantDialog
+      :is-open="isAIAssistantOpen"
+      :code="displayCode"
+      @close="closeAIAssistant"
+      @apply-code="applyAICode"
+    />
 
     <!-- 输出区域 -->
     <div v-if="output || error || executionTime !== null || images.length > 0" class="output-wrapper">
@@ -162,6 +184,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { executeCode } from '../utils/python-api'
 import { codeToHtml } from 'shiki'
+import CodeAssistantDialog from './CodeAssistantDialog.vue'
 
 const props = defineProps<{
   code: string
@@ -181,6 +204,7 @@ const codeElement = ref<HTMLElement | null>(null)
 const highlightedCode = ref('')
 const codeBlockContainer = ref<HTMLElement | null>(null)
 const images = ref<string[]>([])
+const isAIAssistantOpen = ref(false)
 
 // 显示的代码：编辑模式下显示编辑后的代码，否则显示原始代码
 const displayCode = computed(() => {
@@ -338,6 +362,36 @@ async function resetCode() {
   output.value = ''
   error.value = ''
   executionTime.value = null
+}
+
+// 打开 AI 助手
+function openAIAssistant() {
+  isAIAssistantOpen.value = true
+}
+
+// 关闭 AI 助手
+function closeAIAssistant() {
+  isAIAssistantOpen.value = false
+}
+
+// 应用 AI 生成的代码
+async function applyAICode(newCode: string) {
+  // 应用新代码
+  editedCode.value = newCode
+
+  // 重新生成语法高亮
+  highlightedCode.value = await highlightCode(newCode)
+
+  // 退出编辑模式（如果在编辑）
+  if (isEditing.value) {
+    isEditing.value = false
+  }
+
+  // 清空之前的输出
+  output.value = ''
+  error.value = ''
+  executionTime.value = null
+  images.value = []
 }
 
 // 代码失焦时保存编辑内容
@@ -544,6 +598,18 @@ function clearOutput() {
 .copy-button:hover {
   background: var(--vp-c-bg);
   border-color: #3b82f6;
+}
+
+.ai-button {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  font-weight: 600;
+}
+
+.ai-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
 }
 
 .run-button {
