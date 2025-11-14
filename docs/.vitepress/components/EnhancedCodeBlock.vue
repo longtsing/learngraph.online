@@ -10,7 +10,7 @@
           class="action-button reset-button"
           :title="editedCode && editedCode !== props.code ? '还原到初始代码' : '代码未修改'"
         >
-          ↩️ 还原代码
+          ↩️ 还原
         </button>
       </div>
       <div class="code-actions">
@@ -80,7 +80,7 @@
           class="action-button reset-button"
           :title="editedCode && editedCode !== props.code ? '还原到初始代码' : '代码未修改'"
         >
-          ↩️ 还原代码
+          ↩️ 还原
         </button>
       </div>
       <div class="code-actions">
