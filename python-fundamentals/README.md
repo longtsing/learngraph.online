@@ -145,7 +145,8 @@
 王几行XING（Bryce Wang）
 - AI 研究者和实践者
 - LangChain/LangGraph 贡献者
-- [个人网站](https://statspai.com)
+- 知乎：[@王几行XING](https://www.zhihu.com/people/brycewang1898)
+- 邮箱：brycew6m@gmail.com
 
 ## 版权声明
 

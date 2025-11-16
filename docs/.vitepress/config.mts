@@ -101,6 +101,7 @@ function generateSidebar() {
     '/learngraph/': getBookSidebar('learngraph', '智能体搭建 & LangGraph 飞速上手'),
     '/python-fundamentals/': getBookSidebar('python-fundamentals', 'AI 时代学 Python'),
     '/python-llms/': getBookSidebar('python-llms', '大模型飞速上手'),
+    '/vibe-coding/': getBookSidebar('vibe-coding', 'Vibe Coding 氛围编程'),
   }
 }
 
@@ -154,6 +155,7 @@ export default defineConfig({
       { text: '智能体 & LangGraph 飞速上手', link: '/learngraph/README' },
       { text: 'AI 时代学 Python', link: '/python-fundamentals/README' },
       { text: '大模型飞速上手', link: '/python-llms/README' },
+      { text: 'Vibe Coding 氛围编程', link: '/vibe-coding/README' },
       { text: '🔑 API Key 配置', link: '/python-run' },
       { text: '关于作者', link: 'https://statspai.com' }
     ],

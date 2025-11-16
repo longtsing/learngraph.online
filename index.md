@@ -18,6 +18,10 @@ features:
     title: 《智能体 & LangGraph 飞速上手》
     details: 深入学习 LangGraph 和 Multi-Agent 系统开发。8 大章节，从基础概念到生产部署，掌握智能体构建完整技能。
 
+  - icon: 🎵
+    title: 《Vibe Coding：氛围编程的艺术》
+    details: 用 AI 重新定义编程体验！深度解析 Claude Code、Skills、MCP、Spec-kit 四大工具。从"Code Monkey"到"Product Designer"，2 小时完成原型开发。
+
   - icon: 🐍
     title: 《AI 时代学 Python》
     details: 零基础入门 Python，学会使用 AI 工具辅助编程。10 大章节，通过实战项目快速上手，专为 AI 时代设计。
@@ -32,11 +36,7 @@ features:
 
   - icon: 📚
     title: 系统化学习路径
-    details: 三本书覆盖 Python 基础、大模型应用、智能体开发。循序渐进，构建完整的 AI 开发知识体系。
-
-  - icon: 💡
-    title: 案例先行，通俗易懂
-    details: 每个概念配有清晰定义、原理分析、代码示例。大白话解读专业术语，零基础也能快速掌握核心思想。
+    details: 四本书覆盖 Python 基础、大模型应用、智能体开发、AI 协作编程。循序渐进，构建完整的 AI 开发知识体系。
 ---
 
 <script setup>
@@ -126,6 +126,7 @@ print(response.content)
 选择感兴趣的书籍，立即开始学习之旅：
 
 - **想学习 AI 智能体开发？** → [《智能体搭建 & LangGraph 飞速上手》](/learngraph/README)
+- **想掌握 AI 协作编程？** → [《Vibe Coding：氛围编程的艺术》](/vibe-coding/README)
 - **想掌握 Python 编程？** → [《AI 时代学 Python》](/python-fundamentals/README)（筹备中）
 - **想入门大模型应用？** → [《大模型飞速上手》](/python-llms/README)（规划中）
 

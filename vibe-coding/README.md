@@ -481,12 +481,12 @@ git push origin feature/your-contribution
 
 ---
 
-## 📬 联系我们
+## 📬 联系方式
 
-- **GitHub Issues**: [提出问题或建议](https://github.com/yourusername/vibe-coding/issues)
-- **Discussions**: [加入社区讨论](https://github.com/yourusername/vibe-coding/discussions)
-- **Twitter**: [@YourHandle](https://twitter.com/yourhandle)
-- **Email**: your.email@example.com
+- **作者**：王几行XING (Bryce Wang)
+- **知乎**：[@王几行XING](https://www.zhihu.com/people/brycewang1898)
+- **邮箱**：brycew6m@gmail.com
+- **GitHub Issues**: [提出问题或建议](https://github.com/brycewang-stanford/vibe-coding/issues)
 
 ---
 
