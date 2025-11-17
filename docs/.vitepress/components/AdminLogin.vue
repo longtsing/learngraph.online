@@ -40,8 +40,8 @@ const user = ref<any>(null)
 // GitHub OAuth 配置
 const GITHUB_CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID || 'YOUR_CLIENT_ID'
 
-// 只在生产环境显示登录按钮
-const isProduction = window.location.hostname === 'learngraph.online' || window.location.hostname === 'www.learngraph.online'
+// 只在生产环境显示登录按钮 (SSR-safe)
+const isProduction = typeof window !== 'undefined' && (window.location.hostname === 'learngraph.online' || window.location.hostname === 'www.learngraph.online')
 const REDIRECT_URI = 'https://learngraph.online'
 
 onMounted(() => {

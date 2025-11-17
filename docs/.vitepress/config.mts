@@ -113,6 +113,12 @@ export default defineConfig({
   base: '/',
   ignoreDeadLinks: true,
 
+  // 排除不需要构建的 markdown 文件
+  srcExclude: [
+    '**/TradingAgents-main/**',
+    '**/node_modules/**'
+  ],
+
   // 优化 Vite 配置，改善 HMR 稳定性
   vite: {
     server: {

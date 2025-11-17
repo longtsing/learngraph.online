@@ -89,7 +89,7 @@ import { ref, computed } from 'vue'
 import { getCurrentUser } from '../utils/github-api'
 
 const user = ref(getCurrentUser())
-const isProduction = window.location.hostname === 'learngraph.online' || window.location.hostname === 'www.learngraph.online'
+const isProduction = typeof window !== 'undefined' && (window.location.hostname === 'learngraph.online' || window.location.hostname === 'www.learngraph.online')
 
 const adminName = computed(() => {
   if (user.value) {

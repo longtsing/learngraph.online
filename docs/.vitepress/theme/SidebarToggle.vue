@@ -52,6 +52,9 @@ function updateButtonPosition(collapsed) {
 }
 
 onMounted(() => {
+  // 仅在浏览器环境执行
+  if (typeof window === 'undefined') return
+
   // 从 localStorage 恢复状态
   const saved = localStorage.getItem(STORAGE_KEY)
   if (saved === 'true') {
