@@ -75,7 +75,8 @@ function getBookSidebar(bookDir: string, bookName: string) {
           '6': 'Module 6: 记忆系统',
           '7': 'Module 7: 生产部署',
           '8': 'Module 8: 经典案例',
-          '9': 'Module 9: 完整案例-高级研究助手'
+          '9': 'Module 9: 完整案例-高级研究助手',
+          '10': 'Module 10: 完整案例-TradingAgent'
         }
         moduleText = titles[moduleNumber] || `Module ${moduleNumber}`
       } else if (moduleName) {
