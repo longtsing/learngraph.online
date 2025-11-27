@@ -219,6 +219,10 @@ class IPythonDisplay:
 # 创建 IPython 模块实例
 class IPythonModule:
     display = IPythonDisplay
+    
+    @staticmethod
+    def get_ipython():
+        return None
 
 # 注入到 sys.modules
 sys.modules['IPython'] = IPythonModule
