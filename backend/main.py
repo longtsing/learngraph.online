@@ -233,6 +233,11 @@ sys.modules['IPython.display'] = IPythonDisplay
 import matplotlib
 matplotlib.use('Agg')
 
+# 配置中文字体支持
+import matplotlib.pyplot as plt
+plt.rcParams['font.sans-serif'] = ['Noto Sans CJK SC', 'WenQuanYi Zen Hei', 'SimHei', 'Arial Unicode MS', 'DejaVu Sans']
+plt.rcParams['axes.unicode_minus'] = False
+
 # 图片自动保存计数器
 _plot_counter = 0
 
