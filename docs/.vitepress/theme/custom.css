@@ -195,3 +195,53 @@ div.language-python pre code[contenteditable="true"] {
   /* 保留所有 Shiki 生成的颜色和样式 */
   pointer-events: none; /* 防止 span 干扰编辑 */
 }
+
+/* === 左侧导航栏悬浮动态效果 === */
+
+/* 导航链接基础样式 - 添加过渡动画 */
+.VPSidebarItem .link,
+.VPSidebarItem .text {
+  transition: all 0.25s ease !important;
+  border-radius: 6px !important;
+  margin: 2px 0 !important;
+}
+
+/* 悬浮效果：背景色 + 左侧边框 + 轻微位移 */
+.VPSidebarItem .link:hover {
+  background: var(--vp-c-bg-soft) !important;
+  padding-left: 12px !important;
+  border-left: 3px solid var(--vp-c-brand-1) !important;
+  color: var(--vp-c-brand-1) !important;
+  transform: translateX(4px) !important;
+}
+
+/* 可折叠组标题的悬浮效果 */
+.VPSidebarItem.collapsible > .item > .text:hover,
+.VPSidebarItem.collapsible > .item > .indicator:hover + .text {
+  color: var(--vp-c-brand-1) !important;
+}
+
+/* 活动状态保持高亮 */
+.VPSidebarItem .link.active {
+  background: var(--vp-c-brand-soft) !important;
+  border-left: 3px solid var(--vp-c-brand-1) !important;
+  color: var(--vp-c-brand-1) !important;
+  font-weight: 600 !important;
+}
+
+/* 嵌套子项的悬浮效果 */
+.VPSidebarItem.level-1 .link:hover,
+.VPSidebarItem.level-2 .link:hover,
+.VPSidebarItem.level-3 .link:hover {
+  background: var(--vp-c-bg-soft) !important;
+  color: var(--vp-c-brand-1) !important;
+}
+
+/* 折叠箭头图标动画 */
+.VPSidebarItem .caret {
+  transition: transform 0.3s ease !important;
+}
+
+.VPSidebarItem.collapsible:hover .caret {
+  color: var(--vp-c-brand-1) !important;
+}
