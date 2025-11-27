@@ -274,11 +274,16 @@ matplotlib.use('Agg')
 
             execution_time = time.time() - start_time
 
-            # 收集生成的图片
+            # 收集生成的图片（从 output_dir 和 tmpdir 两个位置）
             images_base64 = []
+            # 检查专用图片目录
             image_files = glob.glob(os.path.join(output_dir, '*.png')) + \
                          glob.glob(os.path.join(output_dir, '*.jpg')) + \
                          glob.glob(os.path.join(output_dir, '*.jpeg'))
+            # 同时检查工作目录（用户可能用 plt.savefig 保存到当前目录）
+            image_files += glob.glob(os.path.join(tmpdir, '*.png')) + \
+                          glob.glob(os.path.join(tmpdir, '*.jpg')) + \
+                          glob.glob(os.path.join(tmpdir, '*.jpeg'))
 
             for img_path in sorted(image_files):
                 try:
