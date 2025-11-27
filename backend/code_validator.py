@@ -66,6 +66,10 @@ class CodeValidator:
         'math', 'random', 'datetime', 'time', 'json', 'collections',
         'itertools', 'functools', 'operator', 'string', 're',
         'statistics', 'decimal', 'fractions', 'sys', 'os',
+        # 数据分析和科学计算
+        'numpy', 'pandas', 'scipy',
+        # 数据可视化
+        'matplotlib', 'seaborn', 'plotly', 'altair', 'bokeh',
         # LangChain 相关
         'langchain', 'langchain_openai', 'langchain_anthropic', 'langchain_deepseek', 'langchain_core',
         'langchain_community', 'langchain_experimental',
