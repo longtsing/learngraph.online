@@ -219,6 +219,7 @@ class IPythonDisplay:
 # 创建 IPython 模块实例
 class IPythonModule:
     display = IPythonDisplay
+    version_info = (8, 24, 0)  # 模拟 IPython 版本，避免 matplotlib 检查出错
     
     @staticmethod
     def get_ipython():
