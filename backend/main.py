@@ -233,6 +233,40 @@ sys.modules['IPython.display'] = IPythonDisplay
 import matplotlib
 matplotlib.use('Agg')
 
+# 图片自动保存计数器
+_plot_counter = 0
+
+# 重写 plt.show() 以自动保存图片
+_original_show = None
+
+def _auto_save_show():
+    \"\"\"自动保存当前图形并关闭\"\"\"
+    global _plot_counter
+    import matplotlib.pyplot as plt
+    
+    # 获取所有当前 figure
+    fig_nums = plt.get_fignums()
+    for fig_num in fig_nums:
+        fig = plt.figure(fig_num)
+        if fig.get_axes():  # 只保存有内容的图
+            _plot_counter += 1
+            output_path = os.path.join(IMAGE_OUTPUT_DIR, f'plot_{{_plot_counter}}.png')
+            fig.savefig(output_path, dpi=150, bbox_inches='tight', facecolor='white')
+            print(f"📊 图表已生成: plot_{{_plot_counter}}.png")
+    
+    # 关闭所有图形，释放内存
+    plt.close('all')
+
+# 在用户代码执行后，检查并 hook plt.show
+def _setup_matplotlib_hook():
+    import matplotlib.pyplot as plt
+    global _original_show
+    if _original_show is None:
+        _original_show = plt.show
+        plt.show = _auto_save_show
+
+_setup_matplotlib_hook()
+
 # 用户代码
 {request.code}
 """
