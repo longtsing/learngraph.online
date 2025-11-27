@@ -228,6 +228,10 @@ class IPythonModule:
 sys.modules['IPython'] = IPythonModule
 sys.modules['IPython.display'] = IPythonDisplay
 
+# 设置 matplotlib 使用非交互式后端（必须在 import matplotlib.pyplot 之前）
+import matplotlib
+matplotlib.use('Agg')
+
 # 用户代码
 {request.code}
 """
