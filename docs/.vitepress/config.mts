@@ -26,7 +26,11 @@ function getBookSidebar(bookDir: string, bookName: string) {
             return false
           }
         })
-        .sort()
+        .sort((a: string, b: string) => {
+          const numA = parseInt(a.replace(/module-(\d+).*/, '$1'))
+          const numB = parseInt(b.replace(/module-(\d+).*/, '$1'))
+          return numA - numB
+        })
     } catch (e) {
       console.warn(`[VitePress] Error reading book directory: ${bookPath}`, e)
       return []
@@ -76,7 +80,8 @@ function getBookSidebar(bookDir: string, bookName: string) {
           '7': '7: 生产部署',
           '8': '8: 经典案例',
           '9': '9: 完整案例-高级研究助手',
-          '10': '10: 完整案例-TradingAgent'
+          '10': '10: 完整案例-TradingAgent',
+          '11': '11: 精华知识点总结'
         }
         moduleText = titles[moduleNumber] || `${moduleNumber}`
       } else if (moduleName) {
