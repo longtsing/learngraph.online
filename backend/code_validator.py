@@ -93,8 +93,8 @@ class CodeValidator:
         """
 
         # 1. 检查代码长度
-        if len(code) > 10000:
-            return False, "❌ 代码长度超过限制（最大 10000 字符）"
+        if len(code) > 100000:
+            return False, "❌ 代码长度超过限制（最大 100000 字符）"
 
         # 2. 正则表达式快速检查
         for pattern in cls.DANGEROUS_PATTERNS:
