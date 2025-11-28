@@ -65,7 +65,7 @@ class CodeValidator:
         # Python 标准库
         'math', 'random', 'datetime', 'time', 'json', 'collections',
         'itertools', 'functools', 'operator', 'string', 're',
-        'statistics', 'decimal', 'fractions', 'sys', 'os',
+        'statistics', 'decimal', 'fractions', 'sys', 'os', 'getpass',
         # 数据分析和科学计算
         'numpy', 'pandas', 'scipy',
         # 数据可视化
