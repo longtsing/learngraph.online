@@ -78,9 +78,9 @@ function getBookSidebar(bookDir: string, bookName: string) {
           '5': '5: 高级模式',
           '6': '6: 记忆系统',
           '7': '7: 生产部署',
-          '8': '8: 经典案例',
-          '9': '9: 完整案例-高级研究助手',
-          '10': '10: 完整案例-TradingAgent',
+          '8': '8: 经典小案例',
+          '9': '9: 重点案例-高级研究助手',
+          '10': '10: 重点案例-TradingAgent',
           '11': '11: 精华知识点总结'
         }
         moduleText = titles[moduleNumber] || `${moduleNumber}`
