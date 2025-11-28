@@ -62,25 +62,25 @@ function getBookSidebar(bookDir: string, bookName: string) {
       })
 
       // 根据不同的书设置不同的章节标题
-      let moduleText = `Module ${moduleNumber}`
+      let moduleText = `${moduleNumber}`
 
       if (bookDir === 'learngraph') {
         const titles: {[key: string]: string} = {
-          '0': 'Module 0: Python 基础',
-          '1': 'Module 1: 基础概念',
-          '2': 'Module 2: 核心组件',
-          '3': 'Module 3: 核心机制',
-          '4': 'Module 4: 人机协作',
-          '5': 'Module 5: 高级模式',
-          '6': 'Module 6: 记忆系统',
-          '7': 'Module 7: 生产部署',
-          '8': 'Module 8: 经典案例',
-          '9': 'Module 9: 完整案例-高级研究助手',
-          '10': 'Module 10: 完整案例-TradingAgent'
+          '0': '0: Python 基础',
+          '1': '1: 基础概念',
+          '2': '2: 核心组件',
+          '3': '3: 核心机制',
+          '4': '4: 人机协作',
+          '5': '5: 高级模式',
+          '6': '6: 记忆系统',
+          '7': '7: 生产部署',
+          '8': '8: 经典案例',
+          '9': '9: 完整案例-高级研究助手',
+          '10': '10: 完整案例-TradingAgent'
         }
-        moduleText = titles[moduleNumber] || `Module ${moduleNumber}`
+        moduleText = titles[moduleNumber] || `${moduleNumber}`
       } else if (moduleName) {
-        moduleText = `Module ${moduleNumber}: ${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)}`
+        moduleText = `${moduleNumber}: ${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)}`
       }
 
       sidebar.push({
