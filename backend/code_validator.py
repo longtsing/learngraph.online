@@ -30,7 +30,7 @@ class CodeValidator:
 
     # 危险的内置函数
     DANGEROUS_BUILTINS = {
-        'eval', 'exec', 'compile', '__import__', 'open', 'input',
+        'eval', 'exec', 'compile', '__import__', 'open',
         'exit', 'quit', 'help'
     }
 
