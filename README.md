@@ -1,6 +1,6 @@
-# 《LangGraph 飞速上手 v0.1》
+# LearnGraph.online - AI 智能体开发学习平台
 
-> 案例先行，通俗易懂 —— 基于 LangChain Academy 的深度解读与工程实战指南
+> 从 Python 基础到 LangGraph、LangChain，从基础概念到生产部署 - 快速掌握 AI Agent 开发
 
 [![在线阅读](https://img.shields.io/badge/在线阅读-learngraph.online-blue)](https://www.learngraph.online)
 ![LangGraph](https://img.shields.io/badge/LangGraph-Latest-green)
@@ -13,12 +13,21 @@
 
 **AI 时代，理解为王：摒弃技术细节，直达 Agentic AI 思想内核**
 
-本书是 [LangChain Academy](https://academy.langchain.com/courses/intro-to-langgraph) 官方课程的深度解读与工程实战指南。通过通俗易懂的语言、丰富的案例和在线可执行代码，帮助零基础用户快速掌握 LangGraph 和 Multi-Agent 系统开发。
+LearnGraph.online 是一个系统化的 AI 学习平台，提供从 Python 基础到智能体开发的完整学习路径。平台包含多本系列书籍，通过通俗易懂的语言、丰富的案例和在线可执行代码，帮助用户快速掌握 AI Agent 开发。
+
+### 📚 系列书籍
+
+| 书名 | 状态 | 简介 |
+|------|------|------|
+| **《智能体 & LangGraph 飞速上手》** | ✅ 已完成 | 12 大章节，深入学习 LangGraph 和 Multi-Agent 系统开发 |
+| **《Vibe Coding：氛围编程的艺术》** | ✅ 已完成 | Claude Code、Skills、MCP、Spec-kit 四大工具深度解析 |
+| **《AI 时代学 Python》** | 🚧 筹备中 | 零基础入门 Python，AI 工具辅助编程 |
+| **《大模型飞速上手》** | 📋 规划中 | Prompt Engineering、RAG、Function Calling 等核心技术 |
 
 ### 🎯 核心特色
 
-- ✅ **零门槛上手**：术语通俗易懂老少皆宜地用大白话解读
-- ✅ **案例先行**：5 个从简单到复杂的实战案例，飞速上手
+- ✅ **零门槛上手**：术语通俗易懂，用大白话解读专业概念
+- ✅ **案例先行**：多个从简单到复杂的实战案例，飞速上手
 - ✅ **在线运行**：网页内置 Python 运行环境，边学边练
 - ✅ **深度解读**：每个概念配有清晰定义、原理分析、代码示例、常见陷阱和最佳实践
 - ✅ **工程实战**：从演示级代码到生产级实现的完整指南
@@ -31,69 +40,110 @@
 
 ### 网站功能
 
-- 📚 **完整课程内容**：6 大章节，30+ 篇详细解读文章
+- 📚 **完整课程内容**：12 大章节，60+ 篇详细解读文章
 - 💻 **在线代码运行**：无需本地环境，网页直接运行 Python 代码
-- 🔑 **API Key 管理**：安全存储 OpenAI、Anthropic、Tavily 等 API 密钥
-- 💬 **评论反馈**：每页底部可留言交流学习心得
+- 🔑 **API Key 管理**：安全存储 OpenAI、Anthropic、DeepSeek 等 API 密钥
+- 💬 **评论反馈**：问题反馈页面可免登录留言
 - 🎨 **响应式设计**：支持手机、平板、电脑多端访问
 
 ---
 
-## 📚 课程结构
+## 📚 《智能体 & LangGraph 飞速上手》课程结构
 
-### 第 0 章：基础入门
+### 第 0 章：Python 基础
 
-- **0.0 LangGraph 上手案例**：5 个从简单到复杂的实战案例，飞速上手
-- **0.1 Python 基础入门**：Python 核心概念和 AI/ML 库入门
-- **0.2 LangGraph 基础入门**：LangChain 生态、Chat Models、工具集成
-- **0.3 LangChain 快速回顾**：从 LangGraph 角度系统学习 LangChain 7 大核心组件
+- **0.1 Python 核心基础**：Python 核心概念和语法入门
+- **0.2 面向对象与工程实践**：OOP、模块化、工程实践
+- **0.3 AI 开发工具链**：AI/ML 库和开发环境配置
 
-### 第 1 章：LangGraph 核心
+### 第 1 章：基础概念
 
-- **1.1 构建第一个 LangGraph**：一个最简单的图
-- **1.2 Chain**：顺序执行的工作流
-- **1.3 Router**：条件分支与路由
-- **1.4 Agent**：智能决策与工具调用
-- **1.5 Agent 记忆系统**：多轮对话与持久化
-- **1.6 部署指南**：本地开发与生产部署
+- **1.1 LangGraph 与其它框架对比**：为什么选择 LangGraph
+- **1.2 LangGraph 上手案例**：5 个从简单到复杂的实战案例
+- **1.3 LangChain 快速回顾**：LangChain 7 大核心组件
+- **1.4 LangGraph 基础入门**：核心概念与基本用法
+- **1.5 LangGraph 案例汇总**：官方案例索引
+- **1.6 术语汇总与详细介绍**：完整术语表
+- **1.7 LangGraph Cheatsheet**：速查表
 
-### 第 2 章：状态管理
+### 第 2 章：核心组件
 
-- **2.1 State Schema 设计**：定义图的数据结构
-- **2.2 Reducers**：状态更新的合并策略
-- **2.3 Multiple Schemas**：多模式状态管理
-- **2.4 消息过滤和裁剪**：管理 Token 消耗
-- **2.5 对话摘要**：长期记忆的实现
-- **2.6 外部记忆存储**：集成向量数据库
+- **2.1 Simple Graph 最简图**：构建第一个 LangGraph
+- **2.2 Chain**：顺序执行的工作流
+- **2.3 Router**：条件分支与路由
+- **2.4 Agent**：智能决策与工具调用
+- **2.5 Agent Memory**：多轮对话与持久化
+- **2.6 Deployment**：本地开发与部署指南
 
-### 第 3 章：人机协作
+### 第 3 章：核心机制
 
-- **3.1 Breakpoints**：断点调试机制
-- **3.2 Dynamic Breakpoints**：动态条件断点
-- **3.3 状态编辑**：人工审核与修正
-- **3.4 流式中断**：实时交互与介入
-- **3.5 Time Travel**：时间旅行调试
+- **3.1 State Schema**：定义图的数据结构
+- **3.2 State Reducers**：状态更新的合并策略
+- **3.3 Multiple Schemas**：多模式状态管理
+- **3.4 Trim & Filter Messages**：消息过滤和裁剪
+- **3.5 Chatbot Summarization**：对话摘要与长期记忆
+- **3.6 External Memory**：集成向量数据库
 
-### 第 4 章：高级模式
+### 第 4 章：人机协作
 
-- **4.1 并行执行**：提升系统吞吐量
-- **4.2 Sub-Graph**：模块化设计与复用
-- **4.3 Map-Reduce**：批量处理模式
-- **4.4 研究助手**：完整的实战案例
+- **4.1 Breakpoints**：断点调试机制
+- **4.2 Dynamic Breakpoints**：动态条件断点
+- **4.3 Edit State & Human Feedback**：人工审核与修正
+- **4.4 Streaming Interruption**：流式中断与实时交互
+- **4.5 Time Travel**：时间旅行调试
+- **4.6 Human-in-the-Loop**：人机协作完整指南
 
-### 第 5 章：记忆系统
+### 第 5 章：高级模式
 
-- **5.1 Memory Agent**：带记忆的智能体
-- **5.2 Memory Store**：记忆存储机制
-- **5.3 用户画像**：构建个性化记忆
-- **5.4 记忆集合**：管理多维度记忆
+- **5.1 Parallelization**：并行执行提升吞吐量
+- **5.2 Sub-Graph**：模块化设计与复用
+- **5.3 Map-Reduce**：批量处理模式
+- **5.4 Research Assistant**：研究助手实战案例
 
-### 第 6 章：生产部署
+### 第 6 章：记忆系统
 
-- **6.1 创建部署**：LangGraph Platform 快速上手
-- **6.2 连接部署**：API 集成与调用
-- **6.3 Double Texting**：并发请求处理
-- **6.4 Assistants**：助手模式最佳实践
+- **6.1 Memory Agent**：带记忆的智能体
+- **6.2 Memory Store**：记忆存储机制
+- **6.3 Memory Schema Profile**：构建用户画像
+- **6.4 Memory Schema Collection**：管理多维度记忆
+
+### 第 7 章：生产部署
+
+- **7.1 Creating Deployment**：LangGraph Platform 快速上手
+- **7.2 Connecting Deployment**：API 集成与调用
+- **7.3 Double Texting**：并发请求处理
+- **7.4 Assistants**：助手模式最佳实践
+
+### 第 8 章：经典小案例
+
+- **8.0 基础案例-流水线图**：水果店流水线入门
+- **8.1 Agent Simulation Evaluation**：智能体模拟评估
+- **8.2 Information Gather Prompting**：信息收集提示
+- **8.3 代码助手 RAG + 自我纠正**：RAG 实战案例
+
+### 第 9 章：重点案例 - 高级研究助手
+
+- **9.1 用户需求澄清与研究规划**：智能对话设计
+- **9.2 研究智能体基础**：自主搜索与反思机制
+- **9.3 MCP 集成与工具扩展**：Model Context Protocol
+- **9.4 多智能体协同研究**：Supervisor 模式与并行研究
+- **9.5 完整系统集成**：端到端研究系统
+
+### 第 10 章：重点案例 - TradingAgent
+
+- **10.1 项目背景与论文解读**：UCLA/MIT 研究成果
+- **10.2 架构总览**：15 节点大型 Graph 设计
+- **10.3 State 状态管理**：系统神经中枢
+- **10.4 工具系统**：20+ 工具函数组织
+- **10.5 研究员辩论**：牛熊观点碰撞
+- **10.6 条件逻辑与 Graph 编排**：流程控制
+- **10.7 端到端执行流程**：完整交易决策链路
+- **10.8 NVDA 实战案例分析**：真实股票分析
+
+### 第 11 章：知识点精华
+
+- **11.1 LangGraph 循环对比**：两种循环模式详解
+- **11.2 Mermaid 与 Graph 架构图**：可视化最佳实践
 
 ---
 
@@ -148,29 +198,29 @@ print(response["messages"][-1].content)
 
 ## 💡 学习建议
 
-### 初学者路径（4-6 周）
+### 初学者路径（6-8 周）
 
-1. **第 0 章（3-5 天）**：快速上手案例 + Python 基础
-2. **第 1 章（1 周）**：理解 LangGraph 核心概念
-3. **第 2 章（1 周）**：掌握状态管理
-4. **第 3 章（3-5 天）**：学会调试技巧
-5. **第 4 章（1 周）**：构建复杂系统
-6. **第 5-6 章（1 周）**：生产部署实战
+1. **第 0-1 章（1 周）**：Python 基础 + LangGraph 核心概念
+2. **第 2-3 章（1-2 周）**：核心组件与状态管理
+3. **第 4-5 章（1 周）**：人机协作与高级模式
+4. **第 6-7 章（1 周）**：记忆系统与生产部署
+5. **第 8-10 章（2 周）**：实战案例深度学习
+6. **第 11 章**：知识点回顾与总结
 
-### 进阶开发者路径（1-2 周）
+### 进阶开发者路径（2-3 周）
 
-- 快速浏览第 0-1 章
-- 深入学习第 2-4 章
-- 重点关注第 5-6 章的生产实践
-- 参考项目实战案例
+- 快速浏览第 0-2 章
+- 深入学习第 3-5 章的核心机制
+- 重点关注第 6-7 章的生产实践
+- 深入研究第 9-10 章的工业级案例（Deep Research & TradingAgent）
 
 ### 在线学习技巧
 
 1. **使用网站内置 Python 环境**：无需本地配置，直接运行代码
-2. **配置 API Key**：在网站右上角配置你的 API 密钥
+2. **配置 API Key**：在网站右上角配置你的 API 密钥（支持 OpenAI、Anthropic、DeepSeek）
 3. **逐章学习**：按顺序学习，每章都有详细的进度指引
 4. **实践为主**：运行每个代码示例，观察输出结果
-5. **留言交流**：在页面底部评论区提问和分享
+5. **问题反馈**：在问题反馈页面免登录留言提问
 
 ---
 
@@ -180,9 +230,11 @@ print(response["messages"][-1].content)
 
 以图为核心，用可视化与函数式结构让多智能体系统的推理过程清晰、可控、可扩展。LangGraph 选择不做"另一个工作流构建器"，而是聚焦如何用代码与智能体结合，让 AI 从拼装工具走向真正的智能创造。
 
-### 2. 拒绝"拖拽式"工具带来的幻觉
+### 2. 工业级实战案例
 
-LangChain 创始人 Harrison Chase 指出，拖拽式工作流工具追求的是可预测性，却无法真正构建具备自主决策的智能体。在他看来，OpenAI 的 AgentKit 以及市面上的 Coze、LangFlow 和 Flowise 等，本质上都是可视化工作流构建器，而非真正的"智能体构建器"。
+- **Deep Research 深度研究系统**：多智能体协同、需求澄清、并行研究、上下文压缩
+- **TradingAgent 金融交易系统**：UCLA/MIT 论文级案例，15 节点、6 循环、3 种协作模式
+- **Agent Simulation**：智能体模拟评估与自我纠正
 
 ### 3. 通俗易懂的语言
 
@@ -193,8 +245,8 @@ LangChain 创始人 Harrison Chase 指出，拖拽式工作流工具追求的是
 
 ### 4. 在线可执行代码
 
-- 网页内置 Pyodide 环境
-- 支持大部分 Python 库
+- 网页内置后端 Python 执行环境
+- 支持 LangGraph、LangChain 等 AI 框架
 - 安全的沙盒执行
 - 即时查看运行结果
 
@@ -226,15 +278,14 @@ LangChain 创始人 Harrison Chase 指出，拖拽式工作流工具追求的是
 
 - **VitePress**：静态网站生成器
 - **Vue 3**：交互式组件
-- **Pyodide**：浏览器端 Python 运行环境
 - **Monaco Editor**：代码编辑器
 - **Shiki**：语法高亮
 
 ### 后端
 
 - **FastAPI**：Python 代码执行 API
-- **Docker**：安全的代码执行环境
-- **GitHub OAuth**：管理员登录
+- **Docker**：安全的沙盒执行环境
+- **LangGraph/LangChain**：AI 框架支持
 
 ### 部署
 
@@ -251,7 +302,7 @@ LangChain 创始人 Harrison Chase 指出，拖拽式工作流工具追求的是
 - **知乎**：[@王几行XING](https://www.zhihu.com/people/brycewang1898)
 - **邮箱**：brycew6m@gmail.com
 - **GitHub Issues**：欢迎提问和反馈
-- **网站反馈**：每页底部评论区
+- **网站反馈**：[问题反馈页面](https://www.learngraph.online/feedback.html)（免登录）
 
 ---
 
@@ -265,7 +316,7 @@ LangChain 创始人 Harrison Chase 指出，拖拽式工作流工具追求的是
 
 - 感谢 **LangChain AI 团队**创造了优秀的 LangGraph 框架和官方课程
 - 感谢 **LangChain Academy** 提供了高质量的教学内容
-- 感谢 **Pyodide 团队**让 Python 在浏览器中运行成为可能
+- 感谢 **UCLA/MIT TradingAgent 团队**提供了优秀的开源案例
 - 感谢所有为本项目做出贡献的开发者和学习者
 
 ---
