@@ -170,7 +170,7 @@ export default defineConfig({
       { text: '大模型飞速上手', link: '/python-llms/README' },
       { text: 'Vibe Coding 氛围编程', link: '/vibe-coding/README' },
       { text: '🔑 API Key 配置', link: '/python-run' },
-      { text: '关于作者', link: 'https://statspai.com' }
+      { text: '关于作者', link: 'https://www.zhihu.com/people/brycewang1898' }
     ],
 
     sidebar: generateSidebar(),
