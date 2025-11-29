@@ -21,6 +21,7 @@ RUN pip install --no-cache-dir -U -r requirements.txt
 
 # 复制应用代码
 COPY main.py .
+COPY code_validator.py .
 
 # 暴露端口
 EXPOSE 8000
