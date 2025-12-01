@@ -79,9 +79,10 @@ function getBookSidebar(bookDir: string, bookName: string) {
           '6': '6: 记忆系统',
           '7': '7: 生产部署',
           '8': '8: 经典小案例',
-          '9': '9: 重点案例-高级研究助手',
-          '10': '10: 重点案例-TradingAgent',
-          '11': '11: 精华知识点总结'
+          '9': '9: 完整案例：Deep Research',
+          '10': '10: 完整案例：TradingAgent',
+          '11': '11: 精华知识点总结',
+          "12": '12: 多智能体工作流'
         }
         moduleText = titles[moduleNumber] || `${moduleNumber}`
       } else if (moduleName) {
